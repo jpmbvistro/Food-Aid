@@ -1,7 +1,8 @@
 /*================================
-Onboarding
-
-===============================*/
+----------------------------------
+----------Onboarding--------------
+----------------------------------
+=================================*/
 
 Array.from(document.querySelectorAll('.next-slide-button')).forEach( (item, i) => {
   item.addEventListener('click', element => {
@@ -63,7 +64,10 @@ document.querySelector('#onboardSubmit').addEventListener('click', element => {
 
 })
 
-
+/************************
+======Initialize Map=====
+---Leaflet Integration---
+*************************/
 var map = L.map('map').setView([42.3627354,-71.0865258], 13);
 
 var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -104,25 +108,37 @@ let circle = L.circle([map.getCenter().lat, map.getCenter().lng], {radius: radiu
 circle.addTo(map)
 
 
+/***************************************************
+==Change visual radius of Circle on slider change===
+****************************************************/
+function slide(e){
+  circle.setRadius(e.target.value*MileToMeter)
+}
+slider.oninput = slide
 
 
-  function slide(e){
-    circle.setRadius(e.target.value*MileToMeter)
-  }
-  slider.oninput = slide
+/**********************************
+====Recenter map on Double Click===
+**********************************/
+map.on('dblclick',function(e){
+ let pos = e.latlng
+ marker.setLatLng(pos)
+ circle.setLatLng(pos)
+ map.setView(pos)
+})
 
-  map.on('dblclick',function(e){
-   let pos = e.latlng
-   marker.setLatLng(pos)
-   circle.setLatLng(pos)
-   map.setView(pos)
-  })
+/***********************************
+=======Realign marker on drag=======
+***********************************/
+map.on('drag', function(e){
+ let cnt = map.getCenter()
+ marker.setLatLng(cnt)
+ circle.setLatLng(cnt)
+})
 
-  map.on('drag', function(e){
-   let cnt = map.getCenter()
-   marker.setLatLng(cnt)
-   circle.setLatLng(cnt)
-  })
+
+
+
 // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 //     // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 // }).addTo(map);

@@ -1,6 +1,10 @@
-# Food Aid
+# Fruitfully
 
-Assisting in the organization of food mutual aid projects.
+Mobile-first, cooperative food distribution platform
+
+## Live Site
+
+Fruitfully's Most Stable Version is currently hosted here: https://jpmbvistro-fruitfully.herokuapp.com/
 
 ## Screenshots
 
@@ -11,7 +15,7 @@ Assisting in the organization of food mutual aid projects.
 
 
 
-#### Challenges
+#### Development Notes
 
 Securing sensitive data:
 Do not want submitter data to be sent to client. Should I use delete or destructuring //destructuring introduced by Jerry Lafume
