@@ -1,4 +1,4 @@
-module.exports = function(app, passport, db, uniqid) {
+module.exports = function(app, db, uniqid) {
 
 
 /********************
@@ -7,7 +7,8 @@ module.exports = function(app, passport, db, uniqid) {
 
     // Load root index ===================================================
     app.get('/', function(req, res) {
-      res.render('index.ejs')
+      // res.render('index.ejs')
+      res.redirect('/dashboard')
     })
 
 
@@ -16,17 +17,17 @@ module.exports = function(app, passport, db, uniqid) {
     =====Dashboard routes=====
     **************************/
 
-    app.get('dashboard', isLoggedIn, function(req, res) {
+    app.get('/dashboard', function(req, res) {
       db.collection('foodAid').find().toArray((err, result) => {
         if(err) return console.log(err)
         res.render('dashboard.ejs', {
-          user: req.user,
-          aid: result
+          aid: result,
+          title: 'Dashboard'
         })
       })
     })
 
-    app.post('/aid', isLoggedIn, function(req, res) {
+    app.post('/aid', function(req, res) {
       db.collection('foodAid').insertOne({
         title: req.body.title,
         authorID: req.body.authorID,
@@ -43,7 +44,7 @@ module.exports = function(app, passport, db, uniqid) {
       })
     })
 
-    app.put('/request', isLoggedIn, function(req, res) {
+    app.put('/request', function(req, res) {
       db.collection.findOneAndUpdate({
         _id:req.body._id
       }, {
