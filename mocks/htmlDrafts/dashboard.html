@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Demoday</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section class='main'>
+      <header>
+        <button class='menu-button' type="button" name="button"></button>
+        <button class='menu-button' type="button" name="button">
+          <img src="bell.png" alt="Notifications">
+        </button>
+      </header>
+      <section class='search'>
+        <form class="" action="aid/search" method="get">
+          <input type="text" name="query" placeholder='How can we help?' value="">
+          <input type="submit" name="submit" value="">
+        </form>
+      </section>
+      <section class="suggested-aid">
+        <div class="aid-header">
+          <h2>Available Aid</h2>
+          <span>
+            <a href="#">See All</a>
+          </span>
+        </div>
+        <div class="aid-filters">
+          <form class="aid-filter-form" action="/filterSuggestions" method="get">
+            <ul class='aid-filter-list flex-container'>
+              <li>
+                <button class='aid-filter-button' type="button" name="button" value='relevant'>Relevant</button>
+              </li>
+              <li>
+                <button class='aid-filter-button' type="button" name="button" value='nearby'>Nearby</button>
+              </li>
+              <li>
+                <button class='aid-filter-button' type="button" name="button" value='deliverable'>Delivarable</button>
+              </li>
+              <li>
+                <button class='aid-filter-button' type="button" name="button" value='garden'>Garden</button>
+              </li>
+              <li>
+                <button class='aid-filter-button' type="button" name="button" value='prepacked'>Prepacked</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="suggested-aid">
+          <ul class="suggested-aid-list">
+            <li>
+              <div class="food-card">
+                <div class="category-icon">
+                  <img class='category-image veggie' src="veggie.png" alt="Vegetable">
+                </div>
+                <div class="card-top">
+                  <h3 class='food-title'>Bok Choy</h3>
+                  <span class='food-expiration'>Exp: <span class='expiration-date'>1 Week</span></span>
+                  <div class="food-type">
+                    <img src="garden-icon.png" alt="Garden Grown">
+                  </div>
+                </div>
+                <div class="card-bottom">
+                  <div class="share-options">
+                    <img class='walk' src="carry.png" alt="Walkable">
+                    <img class='delivery' src="delivery.png" alt="Delivery Needed">
+                  </div>
+                  <span class='source'>From: <span class='source-name'>Julia P.</span></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="food-card">
+                <div class="category-icon">
+                  <img class='category-image fruit' src="fruit.png" alt="Fruit">
+                </div>
+                <div class="card-top">
+                  <h3 class='food-title'>Blue Berries</h3>
+                  <span class='food-expiration'>Exp: <span class='expiration-date'>5 Days</span></span>
+                  <div class="food-type">
+                    <img src="garden-icon.png" alt="Garden Grown">
+                  </div>
+                </div>
+                <div class="card-bottom">
+                  <div class="share-options">
+                    <img class='walk' src="carry.png" alt="Walkable">
+                    <img class='hide delivery' src="delivery.png" alt="Delivery Needed">
+                  </div>
+                  <span class='source'>From: <span class='source-name'>Vishant K.</span></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="food-card">
+                <div class="category-icon">
+                  <img class='category-image grain' src="grain.png" alt="Grain">
+                </div>
+                <div class="card-top">
+                  <h3 class='food-title'>Steel Cut Oats</h3>
+                  <span class='food-expiration'><span class='expiration-date'>3 Months</span></span>
+                  <div class="food-type">
+                    <img src="package-icon.png" alt="Prepacked">
+                  </div>
+                </div>
+                <div class="card-bottom">
+                  <div class="share-options">
+                    <img class='walk hide' src="carry.png" alt="Walkable">
+                    <img class='delivery' src="delivery.png" alt="Delivery Needed">
+                  </div>
+                  <span class='source'>From: <span class='source-name'>Prekasht T.</span></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </section>
+      <section class='in-progress'>
+        <div class="in-progress header">
+          <h3>In Progress</h3>
+          <span class='progress-count'>8</span>
+          <button seetype="button" name="button">See All</button>
+        </div>
+        <div class="next-action">
+
+        </div>
+
+
+      </section>
+      <footer class='footer'>
+        <div class="contribute-aid">
+          <div class="contribute-button">
+            <img src="contribute.png" alt="Contribute">
+          </div>
+        </div>
+        <div class="menu">
+          <ul>
+            <li>
+              <img src="home-icon.png" alt="Home">
+            </li>
+            <li>
+              <img src="aid-icon.png" alt="aid">
+            </li>
+            <li>
+              <img src="governance-icon.png" alt="governance">
+            </li>
+            <li>
+              <img src="volunteer-icon.png" alt="volunteer">
+            </li>
+          </ul>
+        </div>
+      </footer>
+
+    </section>
+    <aside class="side-menu">
+      <ul>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Available Aid</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </aside>
+  </body>
+</html>
