@@ -79,7 +79,7 @@ Flex classes
 }
 
 .flex-spread {
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .flex-stretch {
