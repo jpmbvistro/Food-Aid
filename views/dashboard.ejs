@@ -6,21 +6,23 @@
       <%- include('./dashboard/header.ejs') %>
 
       <section class='search'>
-        <form class="" action="aid/search" method="get">
+        <form id='search' class="flex-container flex-xy-center flex-spread" action="aid/search" method="get">
           <input type="text" name="query" placeholder='How can we help?' value="">
-          <input type="submit" name="submit" value="">
+          <button form='search' type="submit" name="submit">
+            <img src="img/icons/search-icon.png" alt="Search">
+          </button>
         </form>
       </section>
-      <section class="suggested-aid">
+      <section class="suggested-aid-container">
         <div class="aid-header">
           <h2>Available Aid</h2>
-          <span>
-            <a href="#">See All</a>
+          <span class='see-all'>
+            <a class=href="#">See All</a>
           </span>
         </div>
         <div class="aid-filters">
           <form class="aid-filter-form" action="/filterSuggestions" method="get">
-            <ul class='aid-filter-list flex-container'>
+            <ul class='aid-filter-list flex-container flex-wrap'>
               <li>
                 <button class='aid-filter-button' type="button" name="button" value='relevant'>Relevant</button>
               </li>
@@ -39,80 +41,42 @@
             </ul>
           </form>
         </div>
+
         <div class="suggested-aid">
-          <ul class="suggested-aid-list">
+          <ul class="suggested-aid-list flex-container">
             <li>
-              <div class="food-card">
-                <div class="category-icon">
-                  <img class='category-image veggie' src="veggie.png" alt="Vegetable">
+              <div class="food-card flex-container flex-column flex-spread">
+                <div class="category-icon veggie">
+                  <img class='category-image  icon' src="img/icons/veggie-icon.png" alt="Vegetable">
                 </div>
                 <div class="card-top">
                   <h3 class='food-title'>Bok Choy</h3>
                   <span class='food-expiration'>Exp: <span class='expiration-date'>1 Week</span></span>
                   <div class="food-type">
-                    <img src="garden-icon.png" alt="Garden Grown">
+                    <img class='icon' src="img/icons/garden-icon.png" alt="Garden Grown">
                   </div>
                 </div>
                 <div class="card-bottom">
                   <div class="share-options">
-                    <img class='walk' src="carry.png" alt="Walkable">
-                    <img class='delivery' src="delivery.png" alt="Delivery Needed">
+                    <img class='walk icon' src="img/icons/carry.png" alt="Walkable">
+                    <img class='delivery icon' src="img/icons/delivery-icon.png" alt="Delivery Needed">
                   </div>
                   <span class='source'>From: <span class='source-name'>Julia P.</span></span>
                 </div>
               </div>
             </li>
-            <li>
-              <div class="food-card">
-                <div class="category-icon">
-                  <img class='category-image fruit' src="fruit.png" alt="Fruit">
-                </div>
-                <div class="card-top">
-                  <h3 class='food-title'>Blue Berries</h3>
-                  <span class='food-expiration'>Exp: <span class='expiration-date'>5 Days</span></span>
-                  <div class="food-type">
-                    <img src="garden-icon.png" alt="Garden Grown">
-                  </div>
-                </div>
-                <div class="card-bottom">
-                  <div class="share-options">
-                    <img class='walk' src="carry.png" alt="Walkable">
-                    <img class='hide delivery' src="delivery.png" alt="Delivery Needed">
-                  </div>
-                  <span class='source'>From: <span class='source-name'>Vishant K.</span></span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="food-card">
-                <div class="category-icon">
-                  <img class='category-image grain' src="grain.png" alt="Grain">
-                </div>
-                <div class="card-top">
-                  <h3 class='food-title'>Steel Cut Oats</h3>
-                  <span class='food-expiration'><span class='expiration-date'>3 Months</span></span>
-                  <div class="food-type">
-                    <img src="package-icon.png" alt="Prepacked">
-                  </div>
-                </div>
-                <div class="card-bottom">
-                  <div class="share-options">
-                    <img class='walk hide' src="carry.png" alt="Walkable">
-                    <img class='delivery' src="delivery.png" alt="Delivery Needed">
-                  </div>
-                  <span class='source'>From: <span class='source-name'>Prekasht T.</span></span>
-                </div>
-              </div>
-            </li>
+
           </ul>
         </div>
       </section>
 
       <section class='in-progress'>
         <div class="in-progress header">
-          <h3>In Progress</h3>
+          <h3>Upcoming</h3>
           <span class='progress-count'>8</span>
-          <button seetype="button" name="button">See All</button>
+          <span class='see-all'>
+            <a href="#">See All</a>
+          </span>
         </div>
         <div class="next-action">
 

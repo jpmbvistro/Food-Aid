@@ -33,9 +33,20 @@ h1{
   margin-bottom: 1rem;
 }
 
-h3,h2 {
-  font-size: min(1vw,3rem);
-  text-align: center;
+h2 {
+  /* margin-top: 1rem; */
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: .25rem;
+}
+
+h3 {
+  font-size: min(5vw,3rem);
+  /* text-align: center; */
+}
+
+.in-progress h3 {
+  display: inline-block;
 }
 
 h4 {
@@ -46,7 +57,7 @@ h4 {
 
 html {
   font-size: 16px;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   /* background-color: #9869ff; */
   /* background-color: rgb(60, 70, 87); */
   background-color: rgb(160, 182, 219);
@@ -55,6 +66,16 @@ html {
 
 .author {
   font-style: italic;
+}
+
+.see-all a{
+  color: rgb(41,41,41);
+  font-size: .75rem;
+  text-decoration: underline;
+}
+
+.main {
+  overflow: hidden;
 }
 
 /************
@@ -299,7 +320,22 @@ aside .profile-container img {
 Custom Layout Below
 *******************/
 
+.aid-filters{
+  margin-bottom: 1rem;
+}
 
+.in-progress {
+  margin: .5rem;
+}
+
+.suggested-aid-container,
+.suggested-aid {
+  margin: 1rem .5rem 1.5rem .5rem;
+}
+
+.suggested-aid {
+  margin-top: 1.5rem;
+}
 
 
 
@@ -309,7 +345,7 @@ Custom Layout Below
 *************************/
 .main {
   background-color: rgba(255,255,255,.3);
-  padding: 1rem min(3rem, 2vw);
+  /* padding: 1rem min(3rem, 2vw); */
   border-radius: 1rem;
   position: relative;
   width: clamp(10rem, 100vw, 30rem);
@@ -618,6 +654,87 @@ li + li{
   box-shadow: inset 0 0 5px 1px;
 } */
 
+/***********************************
+==========Custom Components=========
+************************************/
+.aid-filters button {
+  background: white;
+  border: none;
+  border-radius: 5rem;
+  padding: .25rem .5rem;
+  font-size: .6rem;
+}
+
+.aid-filters li + li {
+  margin-left: .5rem;
+}
+
+.search {
+  padding: 0 1rem;
+}
+
+.search form {
+  background-color: white;
+  width: 100%;
+  padding: .5rem 1rem .5rem 1.5rem;
+  margin: 0 auto;
+  border-radius: 2rem;
+}
+
+.search input,
+.search button {
+  background: none;
+  border: none;
+}
+
+.search button {
+  width: 1rem;
+  padding: 0;
+}
+
+.food-card {
+  width: 10rem;
+  height: 12rem;
+  background: linear-gradient(-45deg,  #C6344D 2%  , #E28471 80% );
+  border-radius: 2rem;
+  color: white;
+  padding: 1.75rem 1rem 1rem 1rem;
+  position: relative;
+}
+
+.food-card .category-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 5px 10px 0 rgba(41,41,41,.5);
+  position: absolute;
+  top: -1rem;
+  left:50%;
+  transform: translateX(-50%);
+}
+
+.food-expiration {
+  font-size: .75rem;
+}
+
+.veggie {
+  background-color: #38B773;
+}
+
+.fruit {
+  background-color: red;
+}
+
+.grain {
+  background-color: grey;
+}
+
+.food-card .category-image {
+  width: 1rem;
+}
 
 /************************
 ==========States=========

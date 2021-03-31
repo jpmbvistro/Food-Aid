@@ -1,11 +1,17 @@
+header {
+  margin: 1rem;
+}
+
+
 .menu-button {
+  padding: 0;
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .menu-line {
-  height: 3px;
+  min-height: 3px;
   background-color: rgb(100,100,100);
 }
 

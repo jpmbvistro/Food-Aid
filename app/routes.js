@@ -21,7 +21,7 @@ module.exports = function(app, db, uniqid) {
       db.collection('foodAid').find().toArray((err, result) => {
         if(err) return console.log(err)
         res.render('dashboard.ejs', {
-          aid: result,
+          foodaid: result,
           title: 'Dashboard'
         })
       })
