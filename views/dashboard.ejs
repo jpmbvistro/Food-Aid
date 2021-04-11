@@ -44,27 +44,32 @@
 
         <div class="suggested-aid">
           <ul class="suggested-aid-list flex-container">
+            <% for(let i = 0 ; i < foodAid.length ;i++) { %>
             <li>
               <div class="food-card flex-container flex-column flex-spread">
-                <div class="category-icon veggie">
-                  <img class='category-image  icon' src="img/icons/veggie-icon.png" alt="Vegetable">
+                <div class="category-icon <%= foodAid[i].foodType %>">
+                  <img class='category-image  icon' src="img/icons/<%= foodAid[i].foodType %>-icon.png" alt="<%= foodAid[i].foodType %>">
                 </div>
                 <div class="card-top">
-                  <h3 class='food-title'>Bok Choy</h3>
-                  <span class='food-expiration'>Exp: <span class='expiration-date'>1 Week</span></span>
-                  <div class="food-type">
-                    <img class='icon' src="img/icons/garden-icon.png" alt="Garden Grown">
+                  <h3 class='food-title'><%= foodAid[i].title %></h3>
+                  <input type="hidden" name="" value="<%= foodAid[i]._id %>">
+                  <span class='food-expiration'>Exp: <span class='expiration-date'><%= foodAid[i].expiration %></span></span>
+                  <div class="food-source">
+                    <img class='icon' src="img/icons/<%= foodAid[i].source %>-icon.png" alt="<%= foodAid[i].source %>">
                   </div>
                 </div>
                 <div class="card-bottom">
                   <div class="share-options">
-                    <img class='walk icon' src="img/icons/carry.png" alt="Walkable">
-                    <img class='delivery icon' src="img/icons/delivery-icon.png" alt="Delivery Needed">
+                    <% if(foodAid[i].canWalk) { %> <img class='walk-icon icon' src="img/icons/carry-icon.png" alt="Walkable"> <% } %>
+
+                    <% if(foodAid[i].canDeliver) { %> <img class='delivery-icon icon' src="img/icons/delivery-icon.png" alt="Delivery Needed"> <% } %>
                   </div>
-                  <span class='source'>From: <span class='source-name'>Julia P.</span></span>
+                  <span class='source'>From: <span class='source-name'><%= foodAid[i].authorName %></span></span>
                 </div>
               </div>
             </li>
+            <% } %>
+            
 
           </ul>
         </div>

@@ -1,11 +1,43 @@
 <footer>
   <link rel="stylesheet" href="css/footer.css">
 
-  <section class='new-contribution flex-container flex-spread'>
+  <section class='new-contribution'>
     <h4>Contribute to the Project</h4>
+    <form class="" action="" method=''>
+      <label for="aid-submit-title">What are you contributing?</label>
+      <input id='aid-submit-title' type="text" name="title" placeholder='Bok Choy, Steel Cut Oats, etc...' value="">
+      <h5>Food Type</h5>
+
+      <input type="radio" name="foodType" value="fruit">
+      <label for="">Fruit</label>
+
+      <input type="radio" name="foodType" value="vegetable">
+      <label for="">Vegetable</label>
+
+      <input type="radio" name="foodType" value="grain">
+      <label for="">Grain</label>
+
+      <input type="radio" name="foodType" value="grain">
+      <label for="">Grain</label>
+
+      <div class="aid-origin">
+        <label for="is-garden-grown">
+          <span>Garden Grown</span>
+          <span>Prepacked</span>
+        </label>
+      </div>
+      <input class='toggle-switch-checkbox' id='is-garden-grown' type="checkbox" name="is-garden-grown" value="">
+      <label class='toggle-switch-label' for="is-garden-grown"></label>
+
+      <label for="expiration-date-input">Expiration</label>
+      <input id='expiration-date-input' type="date" name="expiration" value="">
+
+      <button id='submit-new-aid' type="button" name="button">Submit</button>
+
+    </form>
     <div class="contribute-button-container">
       <button class='contribute-button' type="button" name="button">
-        <img src="img/icons/plus-red.png" alt="Contribute">
+        <img id='addAidButton' src="img/icons/plus-red.png" alt="Contribute">
       </button>
     </div>
 
@@ -29,5 +61,5 @@
     <div class="right-curve">
     </div>
   </section>
-
+<script type="text/javascript" src='js/footer.js'></script>
 </footer>

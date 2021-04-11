@@ -1,4 +1,4 @@
-module.exports = function(app, db, uniqid) {
+module.exports = function(app, db, passport, uniqid, ObjectId) {
 
 
 /********************
@@ -20,8 +20,17 @@ module.exports = function(app, db, uniqid) {
     app.get('/dashboard', function(req, res) {
       db.collection('foodAid').find().toArray((err, result) => {
         if(err) return console.log(err)
+        let clientResult = result.map(item=>{
+          //insert distance calculation here
+          item.canWalk = true
+          item.canDeliver = true
+          delete item.location
+          delete item.authorID
+          delete item.requestor
+          return item
+        })
         res.render('dashboard.ejs', {
-          foodaid: result,
+          foodAid: clientResult,
           title: 'Dashboard'
         })
       })
@@ -30,13 +39,16 @@ module.exports = function(app, db, uniqid) {
     app.post('/aid', function(req, res) {
       db.collection('foodAid').insertOne({
         title: req.body.title,
-        authorID: req.body.authorID,
-        authorName: req.body.authorName,
+        // authorID: req.body.authorID,
+        authorID: 0001,
+        // authorName: req.body.authorName,
+        authorName: 'Justin',
         foodType: req.body.foodType,
         source: req.body.source,
         expiration: req.body.expiration,
-        location: req.body.userLoc,
-        status: available,
+        // location: req.body.userLoc,
+        location: 'Near',
+        status: 'available',
         requestor: null
       }, (err, result) => {
         if (err) return console.log(err)
