@@ -52,24 +52,35 @@
                 </div>
                 <div class="card-top">
                   <h3 class='food-title'><%= foodAid[i].title %></h3>
-                  <input type="hidden" name="" value="<%= foodAid[i]._id %>">
+                  <input type="hidden" name="aid-id" value="<%= foodAid[i]._id %>">
                   <span class='food-expiration'>Exp: <span class='expiration-date'><%= foodAid[i].expiration %></span></span>
                   <div class="food-source">
                     <img class='icon' src="img/icons/<%= foodAid[i].source %>-icon.png" alt="<%= foodAid[i].source %>">
                   </div>
                 </div>
                 <div class="card-bottom">
-                  <div class="share-options">
-                    <% if(foodAid[i].canWalk) { %> <img class='walk-icon icon' src="img/icons/carry-icon.png" alt="Walkable"> <% } %>
 
-                    <% if(foodAid[i].canDeliver) { %> <img class='delivery-icon icon' src="img/icons/delivery-icon.png" alt="Delivery Needed"> <% } %>
+                  <div class="share-options">
+                    <% if(foodAid[i].canWalk) { %>
+                      <button class='req-aid' type="button" name="req-walk">
+                        <img class='walk-icon icon' src="img/icons/carry-icon.png" alt="Walkable">
+                      </button>
+
+                    <% } %>
+
+                    <% if(foodAid[i].canDeliver) { %>
+                      <button class='req-aid' type="button" name="req-deliver">
+                        <img class='delivery-icon icon' src="img/icons/delivery-icon.png" alt="Delivery Needed">
+                      </button>
+
+                    <% } %>
                   </div>
                   <span class='source'>From: <span class='source-name'><%= foodAid[i].authorName %></span></span>
                 </div>
               </div>
             </li>
             <% } %>
-            
+
 
           </ul>
         </div>
