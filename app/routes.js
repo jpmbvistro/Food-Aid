@@ -55,6 +55,21 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
       })
     })
 
+    app.post('/newUser', function(req, res) {
+      db.collection('foodAid').insertOne({
+        displayName: form.querySelector("#inputName").value,
+        wantsVegetables: form.querySelector('#inputVegetable').value,
+        wantsFruits: form.querySelector("#inputFruit").value,
+        wantsGrains: form.querySelector("#inputGrains").value,
+        wantsGarden: form.querySelector("#inputGarden").value,
+        wantsPrepacked: form.querySelector("#inputPrepacked").value,
+        distance: form.querySelector("#travel-setting-onboard").value
+      }, (err, result) => {
+        if (err) return console.log(err)
+        res.send(result)
+      })
+    })
+
     app.post('/aid', function(req, res) {
       db.collection('foodAid').insertOne({
         title: req.body.title,

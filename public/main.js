@@ -13,10 +13,9 @@ Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
         aidID: card.querySelector("input[name='aid-id']").value,
         reqType: element.currentTarget.name
       }),
-      expiration: form.querySelector("input[name='expiration']").value
     })
     .then(response => {
-      if (response.ok) {        
+      if (response.ok) {
         return response.json()
 
       }

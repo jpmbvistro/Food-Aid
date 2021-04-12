@@ -13,9 +13,9 @@ document.querySelector('#submit-new-aid').addEventListener('click', element => {
     body: JSON.stringify({
       title: form.querySelector("input[name='title']").value,
       foodType: Array.from(form.querySelectorAll("input[name='foodType']")).filter(item=>item.checked)[0].value,
-      source: form.querySelector("input[name='is-garden-grown']").checked ? 'garden' : 'prepacked'
+      source: form.querySelector("input[name='is-garden-grown']").checked ? 'garden' : 'prepacked',
+      expiration: form.querySelector("input[name='expiration']").value
     }),
-    expiration: form.querySelector("input[name='expiration']").value
   })
   .then(response => {
     if (response.ok) {
