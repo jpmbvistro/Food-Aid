@@ -39,13 +39,15 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
 
     app.get('/dashboard', function(req, res) {
       db.collection('userSettings').findOne({
-        userID: req.user_id
+        userID: ObjectId(req.user._id)
       }, (err , result) =>{
         if(err) return console.log(err)
+        console.log('===============Did I find the user?===========')
+        console.log(result)
         if(result) {
           db.collection('foodAid').find().toArray((err2, result2) => {
             if(err2) return console.log(err2)
-            let clientResult = result.map(item2=>{
+            let clientResult = result2.map(item2=>{
               //insert distance calculation here
               item2.canWalk = true
               item2.canDeliver = true
