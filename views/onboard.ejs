@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
+    <link rel="stylesheet" href="/css/onboard.css">
     <section class='main'>
       <form class="newUserForm" action="" method="">
         <div class="opening-slide flex-container flex-column flex-xy-center slide">
@@ -12,7 +13,7 @@
           <label for="input-name">Display Name</label>
           <input class='form-input' id='inputName' type="text" name="name" placeholder='Coolest name goes here' value="">
 
-          <button class='primary-button' type="button" name="button">Continue</button>
+          <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
 
         </div>
         <div class="food-pick-slide flex-container flex-column flex-xy-center slide">
@@ -36,7 +37,7 @@
               <input id='inputGrains' class='replace' type="checkbox" name="grain" value="true">
             </label>
           </div>
-          <button class='primary-button' type="button" name="button">Continue</button>
+          <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
         </div>
         <div class="food-preference-slide flex-container flex-column flex-xy-center slide">
@@ -57,7 +58,7 @@
               <input id='inputPrepacked' class='replace' type="checkbox" name="prepacked" value="true">
             </label>
           </div>
-          <button class='primary-button' type="button" name="button">Continue</button>
+          <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
         </div>
         <div class="travel-slide slide flex-container flex-column flex-xy-center">
@@ -78,7 +79,7 @@
           </div>
           <label for="inputAddress">Also your address</label>
           <input id='inputAddress' type="text" name="address" value="">
-          <button class='primary-button' type="button" name="button">Continue</button>
+          <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
         </div>
         <div class="process-slide slide flex-container flex-column flex-xy-center">
@@ -88,23 +89,6 @@
           <button id='onboardSubmit' class='primary-button' type="button" name="button">Let's Go!</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
         </div>
-
-        <section>
-          <!-- LOGIN FORM -->
-          <form action="/login" method="post">
-              <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" name="email">
-              </div>
-              <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" name="password">
-              </div>
-
-              <button type="submit" class="btn btn-warning btn-lg">Login</button>
-          </form>
-          <p>Need an account? <a href="/signup">Signup</a></p>
-        </section>
       </form>
     </section>
     <script type="text/javascript" src='js/onboard.js'></script>

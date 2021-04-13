@@ -3,9 +3,16 @@ Onboarding
 
 ===============================*/
 
+Array.from(document.querySelectorAll('.next-slide-button')).forEach( (item, i) => {
+  item.addEventListener('click', element => {
+    element.currentTarget.parentElement.classList.add('animate')
+  })
+})
+
 /*====Submit====*/
 document.querySelector('#onboardSubmit').addEventListener('click', element => {
-  let form = document.querySelector('newUserForm')
+  let form = document.querySelector('.newUserForm')
+  console.log("==============+TEST===============")
   fetch('newUser', {
     method: 'post',
     headers: {'Content-Type': 'application/json'},
@@ -17,7 +24,7 @@ document.querySelector('#onboardSubmit').addEventListener('click', element => {
       wantsGarden: form.querySelector("#inputGarden").value,
       wantsPrepacked: form.querySelector("#inputPrepacked").value,
       address: form.querySelector('#inputAddress').value,
-      distance: form.querySelector("#travel-setting-onboard").value
+      userDistance: form.querySelector("#travel-setting-onboard").value
     }),
   })
   .then(response => {
@@ -27,5 +34,8 @@ document.querySelector('#onboardSubmit').addEventListener('click', element => {
   })
   .then(data => {
     console.log(data)
+  })
+  .catch(err=>{
+    throw new Error(err)
   })
 })

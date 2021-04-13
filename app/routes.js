@@ -25,48 +25,61 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         message: req.flash('loginMessage'),
         title: 'Signup'
       })
+    })
 
       app.get('/onboard', function(req, res) {
         res.render('onboard.ejs', {
           title: 'Onboarding'
         })
-    })
+      })
 
     /**************************
     =====Dashboard routes=====
     **************************/
 
     app.get('/dashboard', function(req, res) {
-      db.collection('foodAid').find().toArray((err, result) => {
+      db.collection('userSettings').findOne({
+        userID: req.user_id
+      }, (err , result) =>{
         if(err) return console.log(err)
-        let clientResult = result.map(item=>{
-          //insert distance calculation here
-          item.canWalk = true
-          item.canDeliver = true
-          delete item.location
-          delete item.authorID
-          delete item.requestorID
-          return item
-        })
-        res.render('dashboard.ejs', {
-          foodAid: clientResult,
-          title: 'Dashboard'
-        })
+        if(result) {
+          db.collection('foodAid').find().toArray((err2, result2) => {
+            if(err2) return console.log(err2)
+            let clientResult = result.map(item2=>{
+              //insert distance calculation here
+              item2.canWalk = true
+              item2.canDeliver = true
+              delete item2.location
+              delete item2.authorID
+              delete item2.requestorID
+              return item2
+            })
+            res.render('dashboard.ejs', {
+              foodAid: clientResult,
+              title: 'Dashboard'
+            })
+          })
+        } else {
+          res.redirect('/onboard')
+        }
       })
+
     })
 
     app.post('/newUser', function(req, res) {
-      db.collection('foodAid').insertOne({
-        displayName: form.querySelector("#inputName").value,
-        wantsVegetables: form.querySelector('#inputVegetable').value,
-        wantsFruits: form.querySelector("#inputFruit").value,
-        wantsGrains: form.querySelector("#inputGrains").value,
-        wantsGarden: form.querySelector("#inputGarden").value,
-        wantsPrepacked: form.querySelector("#inputPrepacked").value,
-        distance: form.querySelector("#travel-setting-onboard").value
+      db.collection('userSettings').insertOne({
+        userID: req.user._id,
+        displayName: req.body.displayName,
+        wantsVegetables: Boolean(req.body.wantsVegetables),
+        wantsFruits: Boolean(req.body.wantsFruits),
+        wantsGrains: Boolean(req.body.wantsGrains),
+        wantsGarden: Boolean(req.body.wantsGarden),
+        wantsPrepacked: Boolean(req.body.wantsPrepacked),
+        address: req.body.address,
+        userDistance: Number(req.body.userDistance)
       }, (err, result) => {
         if (err) return console.log(err)
-        res.send(result)
+        res.redirect('/dashboard')
       })
     })
 
@@ -119,8 +132,8 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/userSetup', // redirect to the secure profile section
-        failureRedirect : '/', // redirect back to the signup page if there is an error
+        successRedirect : '/dashboard', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 

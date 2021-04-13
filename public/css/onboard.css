@@ -1,0 +1,42 @@
+form {
+  position: relative;
+  overflow: hidden;
+}
+
+form, .slide {
+  height: 100%;
+  width: 100%;
+}
+
+.food-options {
+  grid-template-columns: 1fr 1fr 1fr
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 185, 195);
+  transition: all .8s ease;
+  transform-origin: 60% bottom;
+}
+
+.slide.animate {
+  transform: rotate(180deg);
+}
+
+.opening-slide {
+  z-index: 5;
+}
+
+.food-pick-slide {
+  z-index: 4;
+}
+
+.food-preference-slide {
+  z-index: 3;
+}
+
+.travel-slide {
+  z-index: 2;
+}
