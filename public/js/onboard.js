@@ -25,19 +25,22 @@ document.querySelector('#onboardSubmit').addEventListener('click', element => {
       'wantsPrepacked': form.querySelector("#inputPrepacked").value,
       'address': form.querySelector('#inputAddress').value,
       'userDistance': form.querySelector("#travel-setting-onboard").value
-    }),
+    })
   })
   .then(response => {
     console.log(response)
+
     if (response.ok) {
-      return response.json()
+      console.log("++++++++++++++");
+      let fun =response.text()
+      console.log(fun);
+      return fun
     }
   })
   .then(data => {
     console.log('=========')
     console.log(data)
+    window.location.replace("/dashboard")
   })
-  .catch(err=>{
-    throw new Error(err)
-  })
+
 })

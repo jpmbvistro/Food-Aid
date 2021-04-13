@@ -6,7 +6,7 @@ Request functionality
 Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
   item.addEventListener('click', element=>{
     let card = element.currentTarget.parentElement.parentElement.parentElement
-    fetch('aid', {
+    fetch('request', {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

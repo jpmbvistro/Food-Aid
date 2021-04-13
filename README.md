@@ -24,3 +24,21 @@ adding users is so much more trouble
 new error occuring when posting a new userSettings
 I get a 200 response from the server but catch an error
 Uncaught (in promise) Error: SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Realized missing '.' in routes js file when checking dashboard for userSettings '._id'
+
+
+Need to figure out how to save userSEttings into session. Currently have to load userSettings when needing information. Maybe that's okay for now.
+
+All base funcitonality done. 4/13/2021
+
+ToDo:
+  -Update filters in database queries to exclude user self submissions & aid not meeting userSettings & those which are not available
+  -Texting Ability (Twilio)
+  -Distance Calculation - GeoJSON<->Leaflet?
+    -If Can store GeoJSON then database may be able to help calculate and filter distance
+  -transaction completion
+
+Updating Filters:
+  - Initially perplexed on how to setup filter options without disrupting mongo syntax, but then realized I can set the arrays as normal arrays!
+  -This is hard
+  -Completed filters

@@ -44,9 +44,42 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         if(err) return console.log(err)
         console.log('===============Did I find the user?===========')
         console.log(result)
+
+        //If the userSettings Exists query foodAid utilizing userSettings
         if(result) {
-          db.collection('foodAid').find().toArray((err2, result2) => {
+
+          //Setup Search Filter
+          let searchFilter = {$and:[]  }
+
+          //exclude all posts by this user
+          searchFilteruserID = { authorID: {$ne: ObjectId(req.user._id)} }
+          searchFilter.$and.push(searchFilteruserID)
+
+          //include only available aid
+          searchFilter.$and.push({status: 'available'})
+
+          //=====Add foodPreferences (if Any)=====
+          //FoodType grain, fruit, vegetable
+          let foodTypePreferences = []
+          if(result.wantsFruits)foodTypePreferences.push({'foodType':'fruit'})
+          if(result.wantsVegetables)foodTypePreferences.push({'foodType':'vegetable'})
+          if(result.wantsGrains)foodTypePreferences.push({'foodType':'grain'})
+
+          if(foodTypePreferences.length>0) searchFilter.$and.push({$or:foodTypePreferences})
+
+          //garden or prepacked
+          let foodSourcePreferences = []
+          if(result.wantsGarden)foodSourcePreferences.push({'source':'garden'})
+          if(result.wantsPrepacked)foodSourcePreferences.push({'source':'prepacked'})
+
+          if(foodSourcePreferences.length>0) searchFilter.$and.push({$or: foodSourcePreferences})
+          console.log(JSON.stringify(searchFilter))
+
+
+
+          db.collection('foodAid').find(searchFilter).toArray((err2, result2) => {
             if(err2) return console.log(err2)
+            console.log(result2)
             let clientResult = result2.map(item2=>{
               //insert distance calculation here
               item2.canWalk = true
@@ -62,6 +95,7 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
             })
           })
         } else {
+          //If userSettings do not exist, redirect to setup settings
           res.redirect('/onboard')
         }
       })
@@ -80,49 +114,68 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         address: req.body.address,
         userDistance: Number(req.body.userDistance)
       }, (err, result) => {
-        if (err) return console.log(err)
-        res.redirect('/dashboard')
+        if (err){console.log(err)
+          // res.redirect('/dashboard')
+          return res.status(500).send({
+            message: 'This is an error!'
+          })
+        } else {
+          return res.status(201).send({
+            message: "Onboarding Complete"
+          })
+        }
       })
     })
 
     app.post('/aid', function(req, res) {
-      db.collection('foodAid').insertOne({
-        title: req.body.title,
-        // authorID: req.body.authorID,
-        authorID: req.user._id,
-        // authorName: req.body.authorName,
-        authorName: 'Justin',
-        foodType: req.body.foodType,
-        source: req.body.source,
-        expiration: req.body.expiration,
-        // location: req.body.userLoc,
-        location: 'Near',
-        status: 'available',
-        requestorName: '',
-        requestorID: null
-      }, (err, result) => {
-        if (err) return console.log(err)
-        res.send(result)
+      db.collection('userSettings').findOne({
+        userID: ObjectId(req.user._id)
+      },(err, result) => {
+        if(err) return console.log(err)
+        db.collection('foodAid').insertOne({
+          title: req.body.title,
+          authorID: req.user._id,
+          authorName: result.displayName,
+          foodType: req.body.foodType,
+          source: req.body.source,
+          expiration: req.body.expiration,
+          location: result.address,
+          status: 'available',
+          requestorName: '',
+          requestorID: null,
+          reqType: null
+        }, (err2, result2) => {
+          if (err2) return console.log(err2)
+          res.send(result2)
+        })
       })
+
     })
 
     app.put('/request', function(req, res) {
-      db.collection('foodAid').findOneAndUpdate({
-        _id:req.body._id
-      }, {
-        $set:
-          {
-            status: 'pending',
-            requestor: req.user.local.name,
-            requestorID: req.user._id
-          }
-      }, {
-        sort: {_id: -1},
-        upsert:true
+      db.collection('userSettings').findOne({
+        userID: ObjectId(req.user._id)
       }, (err, result) => {
         if(err) return res.send(err)
-        res.send(result)
+        db.collection('foodAid').findOneAndUpdate({
+          _id: ObjectId(req.body.aidID)
+        }, {
+          $set:
+            {
+              status: 'pending',
+              requestor: result.displayName,
+              requestorID: req.user._id,
+              reqType: req.body.reqType
+            }
+        }, {
+          sort: {_id: -1},
+          upsert:true
+        }, (err2, result2) => {
+          if(err2) return res.send(err2)
+          res.send(result2)
+        })
       })
+
     })
 
     // =============================================================================
