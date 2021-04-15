@@ -33,10 +33,14 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         })
       })
 
-    /**************************
-    =====Dashboard routes=====
-    **************************/
+    /*************************************************
+    ===============Dashboard routes===================
+    **************************************************/
 
+
+    /********************************
+    =====Load Dashboard Content=====
+    ********************************/
     app.get('/dashboard', function(req, res) {
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
@@ -58,7 +62,7 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           //include only available aid
           searchFilter.$and.push({status: 'available'})
 
-          //=====Add foodPreferences (if Any)=====
+          /*=====Add foodPreferences (if Any)=====*/
           //FoodType grain, fruit, vegetable
           let foodTypePreferences = []
           if(result.wantsFruits)foodTypePreferences.push({'foodType':'fruit'})
@@ -76,11 +80,11 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           console.log(JSON.stringify(searchFilter))
 
 
-
+          //Find relevant foodAid
           db.collection('foodAid').find(searchFilter).toArray((err2, result2) => {
             if(err2) return console.log(err2)
             console.log(result2)
-            let clientResult = result2.map(item2=>{
+            let foodAid = result2.map(item2=>{
               //insert distance calculation here
               item2.canWalk = true
               item2.canDeliver = true
@@ -89,9 +93,45 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
               delete item2.requestorID
               return item2
             })
-            res.render('dashboard.ejs', {
-              foodAid: clientResult,
-              title: 'Dashboard'
+
+            //Find active all pending transactions and user listings
+            let activeSearchFilter = { $or :[] }
+
+            //listings that were authored by this user
+            let userListingsFilter = {userID: ObjectId(req.user._id)}
+            activeSearchFilter.$or.push(userListingsFilter)
+
+            //listings that are requested by user and are pending
+            let userRequestsFilter = { $and : [] }
+
+            let requestorID = {requestorID : ObjectId(req.user._id)}
+            let status = {status: 'pending'}
+            userRequestsFilter.$and.push(requestorID,status)
+            activeSearchFilter.$or.push(userRequestsFilter)
+
+
+            //Identify user actions
+            db.collection('foodAid').find(activeSearchFilter).toArray((err3, result3) => {
+              if(err3) return console.log(err3)
+              //remove Requestor id for this user's posts
+              //remove authorID for this user's requested aid
+              let userActions = result3.map((item3, index) => {
+                if(item3.userID !== req.user._id){
+                  delete item3.userID
+                }
+                if(item3.requestorID !== req.user._id) {
+                  delete item3.requestorID
+                }
+                delete item3.canDeliver
+                delete item3.canWalk
+                delete item3.location
+                return item3
+              })
+              res.render('dashboard.ejs', {
+                foodAid: foodAid,
+                title: 'Dashboard',
+                actions: userActions
+              })
             })
           })
         } else {
@@ -99,9 +139,13 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           res.redirect('/onboard')
         }
       })
-
     })
 
+
+
+    /*================================
+    =======Save New User Settings=====
+    ==================================*/
     app.post('/newUser', function(req, res) {
       db.collection('userSettings').insertOne({
         userID: req.user._id,
@@ -127,6 +171,9 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
       })
     })
 
+    /*================================
+    ==========Add New Food Aid========
+    ==================================*/
     app.post('/aid', function(req, res) {
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
@@ -143,15 +190,21 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           status: 'available',
           requestorName: '',
           requestorID: null,
-          reqType: null
+          reqType: null,
+          complete: {
+            posterComplete: false,
+            requestorComplete:false
+          }
         }, (err2, result2) => {
           if (err2) return console.log(err2)
           res.send(result2)
         })
       })
-
     })
 
+    /*=======================================
+    ==========Request Posted Food Aid========
+    ========================================*/
     app.put('/request', function(req, res) {
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
@@ -175,7 +228,43 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           res.send(result2)
         })
       })
+    })
 
+
+    /*=======================================
+    ==========Complete Posted Food Aid========
+    ========================================*/
+    app.put('/complete', function(req, res) {
+      db.collection('foodAid').findOne({
+        _id: ObjectId(req.body.aidID)
+      }, (err, result) => {
+        if(err) return res.send(err)
+        let userCompleteType == ''
+        if(result.authorID === req.user._id) userCompleteType = 'posterComplete'
+        if(result.requestorID === req.user._id) userCompleteType = 'requestorComplete'
+        //If requesting user is relevant to the post
+        if(userCompleteType){
+          db.collection('foodAid').findOneAndUpdate({
+            _id: ObjectId(req.body.aidID)
+          }, {
+            $set:
+              {
+                status: 'pending',
+                requestor: result.displayName,
+                requestorID: req.user._id,
+                reqType: req.body.reqType,
+
+              }
+          }, {
+            sort: {_id: -1},
+            upsert:true
+          }, (err2, result2) => {
+            if(err2) return res.send(err2)
+            res.send(result2)
+          })
+        }
+
+      })
     })
 
     // =============================================================================

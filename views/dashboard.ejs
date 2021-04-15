@@ -46,7 +46,7 @@
           <ul class="suggested-aid-list flex-container">
             <% for(let i = 0 ; i < foodAid.length ;i++) { %>
             <li>
-              <div class="food-card flex-container flex-column flex-spread">
+              <div class="food-card card flex-container flex-column flex-spread">
                 <div class="category-icon <%= foodAid[i].foodType %>">
                   <img class='category-image  icon' src="img/icons/<%= foodAid[i].foodType %>-icon.png" alt="<%= foodAid[i].foodType %>">
                 </div>
@@ -88,15 +88,42 @@
 
       <section class='in-progress'>
         <div class="in-progress header">
-          <h3>Upcoming</h3>
-          <span class='progress-count'>8</span>
+          <h3>In Progress: </h3>
+          <span class='progress-count'><%= actions.length %></span>
           <span class='see-all'>
             <a href="#">See All</a>
           </span>
         </div>
-        <div class="next-action">
+        <ul class="next-actions flex-container flex-column">
+          <% for(let i=0 ; i < actions.length ; i++) { %>
+            <li>
+              <div class="card action-card flex-container">
+                <div class="action-card-icon flex-container flex-xy-center">
+                  <img src="img/card/chat.png" alt="message <%=actions[i].authorName%>">
+                </div>
+                <div class="flex-container flex-column action-card-details">
+                  <div class="action-details-main">
+                    <h4><%= actions[i].title %></h4>
+                    <input type="hidden" name="aid-id" value="<%= actions[i]._id%>">
+                    <p><%= actions[i].status %> || <%= actions[i].authorName %></p>
+                  </div>
+                  <div class="expiration-container">
+                    <span class='expiration'>Expires: <%= actions[i].expiration %></span>
+                  </div>
+                </div>
+                <div class="action-buttons flex-container">
+                  <button class='complete-exchange-button' type="button" name="button">
+                    <img class='configure-icon' src="img/card/checked.png" alt="Complete Button">
+                  </button>
+                  <button class='exchange-details-button' type="button" name="button">
+                    <img class='configure-icon' src="img/card/sliders.png" alt="Focus Button">
+                  </button>
+                </div>
+              </div>
+            </li>
 
-        </div>
+          <% } %>
+        </ul>
       </section>
 
 

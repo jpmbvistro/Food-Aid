@@ -55,6 +55,10 @@ h4 {
   margin-bottom: .5rem;
 }
 
+.in-progress h4{
+  margin-bottom: .25rem;
+}
+
 html {
   font-size: 16px;
   font-family: 'Source Sans Pro', sans-serif;
@@ -75,7 +79,16 @@ html {
 }
 
 .main {
-  overflow: hidden;
+  /* overflow: scroll; */
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
+.expiration {
+  display: inline-block;
+  padding-top: .5rem;
+  font-size: .74rem;
+  color: rgb(41,41,41);
 }
 
 /************
@@ -320,8 +333,18 @@ aside .profile-container img {
 Custom Layout Below
 *******************/
 
+.search {
+  display: none;
+}
+
 .aid-filters{
   margin-bottom: 1rem;
+}
+
+.aid-header,
+.aid-filters {
+  margin-left: .5rem;
+  margin-right: .5rem;
 }
 
 .in-progress {
@@ -330,7 +353,7 @@ Custom Layout Below
 
 .suggested-aid-container,
 .suggested-aid {
-  margin: 1rem .5rem 1.5rem .5rem;
+  margin: 1rem 0 1.5rem 0;
 }
 
 .suggested-aid {
@@ -344,7 +367,7 @@ Custom Layout Below
 ===Additional Styling====
 *************************/
 .main {
-  background-color: rgba(255,255,255,.3);
+  background-color: rgba(189,204,230,1);
   /* padding: 1rem min(3rem, 2vw); */
   border-radius: 1rem;
   position: relative;
@@ -654,6 +677,16 @@ li + li{
 /***********************************
 ==========Custom Components=========
 ************************************/
+
+.suggested-aid{
+  overflow-x: scroll;
+  padding: 1rem 0;
+}
+
+.suggested-aid-list > li + li{
+  margin-left: 1rem;
+}
+
 .aid-filters button {
   background: white;
   border: none;
@@ -688,6 +721,52 @@ li + li{
   width: 1rem;
   padding: 0;
 }
+
+.card {
+
+}
+
+.next-actions ::marker {
+  display: none;
+}
+
+.action-card {
+  width: 95%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: .5rem;
+  margin:.5rem;
+}
+
+.action-card > * {
+
+}
+
+.action-card-icon {
+  padding: 1rem;
+  flex: 1 1 2rem;
+}
+
+.action-card-details {
+  padding: .5rem 0 .5rem 0;
+  flex: 2 1 5rem;
+}
+
+.action-buttons {
+  flex: 0 1 4rem;
+  padding: 0 .5rem 0 0;
+}
+
+.action-buttons button {
+  background: none;
+  outline: none;
+  border: none;
+  justify-self: end;
+}
+
+.action-card .configure-icon {
+  width: 1.3rem;
+}
+
 
 .food-card {
   width: 10rem;

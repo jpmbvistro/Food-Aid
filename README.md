@@ -37,8 +37,11 @@ ToDo:
   -Distance Calculation - GeoJSON<->Leaflet?
     -If Can store GeoJSON then database may be able to help calculate and filter distance
   -transaction completion
+  add modular
 
 Updating Filters:
   - Initially perplexed on how to setup filter options without disrupting mongo syntax, but then realized I can set the arrays as normal arrays!
   -This is hard
   -Completed filters
+
+User security by removing non current user id's
