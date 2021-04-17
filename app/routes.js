@@ -239,21 +239,27 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         _id: ObjectId(req.body.aidID)
       }, (err, result) => {
         if(err) return res.send(err)
-        let userCompleteType == ''
-        if(result.authorID === req.user._id) userCompleteType = 'posterComplete'
-        if(result.requestorID === req.user._id) userCompleteType = 'requestorComplete'
-        //If requesting user is relevant to the post
-        if(userCompleteType){
+        //If requesting user is relevant to the post and post has not been fully completed yet
+        if((result.status !== 'complete') && (result.authorID === req.user._id || result.requestorID === req.user._id)){
+
+          let newCompleteObj = {}
+          if(result.authorID === req.user._id) {
+            newCompleteObj.posterComplete = result.complete.posterComplete === false
+            newCompleteObj.requestorComplete = result.complete.requestorComplete
+          }
+          if(result.requestorID === req.user._id) {
+            newCompleteObj.posterComplete = result.complete.posterComplete
+            newCompleteObj.requestorComplete = result.complete.requestorComplete === false
+          }
+          let newStatus = newCompleteObj.posterComplete && newCompleteObj.requestorComplete ? 'complete' : result.status
+
           db.collection('foodAid').findOneAndUpdate({
             _id: ObjectId(req.body.aidID)
           }, {
             $set:
               {
-                status: 'pending',
-                requestor: result.displayName,
-                requestorID: req.user._id,
-                reqType: req.body.reqType,
-
+                status: newStatus,
+                complete: newCompleteObj
               }
           }, {
             sort: {_id: -1},
@@ -262,7 +268,9 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
             if(err2) return res.send(err2)
             res.send(result2)
           })
+
         }
+
 
       })
     })

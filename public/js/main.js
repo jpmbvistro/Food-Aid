@@ -29,8 +29,8 @@ Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
 
 
 /*================================
-Request functionality
-===============================*/
+=====Complete Aid functionality===
+=================================*/
 Array.from(document.querySelectorAll('complete-exchange-button')).forEach((item,i) => {
   item.addEventListener('click', element=>{
     let card = element.currentTarget.parentElement.parentElement
