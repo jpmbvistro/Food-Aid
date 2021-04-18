@@ -45,3 +45,20 @@ Updating Filters:
   -Completed filters
 
 User security by removing non current user id's
+
+
+
+Scary Learning TWilio since there are so many moving pieces.
+
+Learning about client side SDKs
+
+translating JQuery to vanilla JS
+
+tokenGeneration and handling
+
+translating syntax across twilio technologies
+
+Handling Global Variables and when to refactor code to be cleaner (more variables)
+
+
+Worried about best practices with client SDK because of limitations of API billing

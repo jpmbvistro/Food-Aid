@@ -1,4 +1,5 @@
-module.exports = function(app, db, passport, uniqid, ObjectId) {
+module.exports = function(
+  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilio, twilioVars) {
 
 
 /********************
@@ -274,6 +275,29 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
 
       })
     })
+
+    // =============================================================================
+    // Twilio Routes================================================================
+    // =============================================================================
+    app.get('/token', isLoggedIn, (req, res) => {
+      // const identity = request.params.identity;
+      // const accessToken = new twilio.jwt.AccessToken(config.twilio.accountSid, config.twilio.apiKey, config.twilio.apiSecret);
+      // const chatGrant = new twilio.jwt.AccessToken.ChatGrant({
+      //   serviceSid: config.twilio.chatServiceSid,
+      // });
+      // accessToken.addGrant(chatGrant);
+      // accessToken.identity = identity;
+      let {token, identity} = tokenGenerator.tokenGenerate(req.user._id)
+      response.set('Content-Type', 'application/json');
+      response.send(JSON.stringify({
+        token: token,
+        identity: identity
+      }));
+    })
+
+
+
+
 
     // =============================================================================
     // AUTHENTICATE (FIRST LOGIN) ==================================================
