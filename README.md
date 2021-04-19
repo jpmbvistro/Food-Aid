@@ -75,3 +75,13 @@ to do, on fully completed task, disable chat
 write client side requests
 write client side chat UI
 test
+
+cannot use messages because requires more numbers
+
+does console logging errors essentially help make a stack trace of where errors come from?
+functionality in chatWindow completed. Need to link to it.
+
+Ensure that dashboard only renders tasks with active message paths if
+have requesting aid auto forward to the chat on client side.
+
+creating a custom error for when req w/o conversation

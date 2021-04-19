@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <section class='main'>
+      <%- include('./dashboard/header.ejs') %>
+      <section id='chat' class='chat'>
+        <input type="hidden" name="conversationSid" value="<%= conversationSid %>">
+        <div id='chat-display' class="chat-display flex-container flex-column">
+
+        </div>
+        <div class="chat-input-container">
+          <input id='chat-input' class='chat-input' type="text" name="input-message" placeholder="Whatcha thinkin'?"value="">
+          <button id='submit-chat-button' type="button" name="submit-chat">
+            <img src="../img/icons/submit-button.png" alt="Submit Message">
+          </button>
+        </div>
+      </section>
+      <div class="prev-arrow"><</div>
+    </section>
+
+    <%- include('./dashboard/aside.ejs') %>
+    <script src="https://media.twiliocdn.com/sdk/js/chat/v4.0/twilio-chat.min.js"></script>
+    <script type="text/javascript" src='../js/main.js' ></script>
+    <script type="text/javascript" src='../js/twilio.js'></script>
+
+    </script>
+
+  </body>
+</html>

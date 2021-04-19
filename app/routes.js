@@ -28,11 +28,37 @@ module.exports = function(
       })
     })
 
-      app.get('/onboard', function(req, res) {
-        res.render('onboard.ejs', {
-          title: 'Onboarding'
-        })
+    app.get('/onboard', function(req, res) {
+      res.render('onboard.ejs', {
+        title: 'Onboarding'
       })
+    })
+
+    app.get('/chat/:aidID', async (req, res) => {
+      try {
+        let response = await db.collection('foodAid').findOne({
+          id: ObjectId(req.params.aidID)
+        })
+        //FUTURE: can validate that req.user is part of the conversation
+        if(response.twilioConversationSID){
+          res.render('chat.ejs', {
+            conversationSid: response.twilioConversationSID,
+            title: 'Chat'
+          })
+        }
+        else {
+          throw 'No Conversation'
+        }
+
+      } catch (e) {
+        console.log(e)
+        if(e==='No Conversation') res.status(400).send({
+          message: e
+        })
+      } finally {
+
+      }
+    })
 
     /*************************************************
     ===============Dashboard routes===================
