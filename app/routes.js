@@ -1,5 +1,5 @@
 module.exports = function(
-  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilio, twilioVars) {
+  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars) {
 
 
 /********************
@@ -157,7 +157,8 @@ module.exports = function(
         wantsGarden: Boolean(req.body.wantsGarden),
         wantsPrepacked: Boolean(req.body.wantsPrepacked),
         address: req.body.address,
-        userDistance: Number(req.body.userDistance)
+        userDistance: Number(req.body.userDistance),
+        twilioIdentitySID: null
       }, (err, result) => {
         if (err){console.log(err)
           // res.redirect('/dashboard')
@@ -195,7 +196,8 @@ module.exports = function(
           complete: {
             posterComplete: false,
             requestorComplete:false
-          }
+          },
+          twilioConversationSID: null
         }, (err2, result2) => {
           if (err2) return console.log(err2)
           res.send(result2)
@@ -211,23 +213,71 @@ module.exports = function(
         userID: ObjectId(req.user._id)
       }, (err, result) => {
         if(err) return res.send(err)
-        db.collection('foodAid').findOneAndUpdate({
-          _id: ObjectId(req.body.aidID)
-        }, {
-          $set:
-            {
-              status: 'pending',
-              requestor: result.displayName,
-              requestorID: req.user._id,
-              reqType: req.body.reqType
+        async () =>{
+          try{
+            let conversationSid = await client.conversations.conversations.create()
+            let response = await db.collection('foodAid').findOneAndUpdate({
+              _id: ObjectId(req.body.aidID)
+            }, {
+              $set:
+                {
+                  status: 'pending',
+                  requestor: result.displayName,
+                  requestorID: req.user._id,
+                  reqType: req.body.reqType,
+                  twilioConversationSID: conversationSid
+                }
+            }, {
+              sort: {_id: -1},
+              upsert:true
+            })
+
+            let userSID = ''
+            //if this user doesn't have twilioIdentity create one and save
+            if(result.twilioIdentitySID===null){
+               userSID = await client.conversations.users.create({
+                identity: req.user._id,
+                friendlyName: result.displayName,
+                roleSid: 'RL78a3fffe2d80418db969d07acd06ada6'
+              })
+              await db.collection('userSettings').findOneAndUpdate({userID:ObjectId(result._id)},{
+                $set:
+                {
+                  twilioIdentitySID:userSID
+                }
+              }
             }
-        }, {
-          sort: {_id: -1},
-          upsert:true
-        }, (err2, result2) => {
-          if(err2) return res.send(err2)
-          res.send(result2)
-        })
+            //Also add this user to the created conversation
+            let userParticipantSid = await client.conversations.conversations(conversationSid).participants.create({
+              identity: req.user._id
+            })
+            res.send(response)
+
+            //Check and create a twilioIdentity for person who posted the resource
+            //creating this resource should not affect the current user's ability to use the apt -> after res.send
+            let posterSID = ''
+
+            let posterUser = await db.collection('userSettings').findOne({
+              userID:ObjectId(response.value.authorID)})
+            if(posterUser.twilioIdentitySID===null){
+              posterSID = await client.conversations.users.create({
+                identity: posterUser.authorID,
+                friendlyName: posterUser.displayName,
+                roleSid: 'RL78a3fffe2d80418db969d07acd06ada6'
+              })
+              await db.collection('userSettings').findOneAndUpdate({userID: ObjectId(posterUser._id)},{
+                $set: {
+                  twilioIdentitySID:posterSID
+                }
+              })
+            }
+            await client.conversations.conversations(conversationSid).participants.create({
+              identity: posterUser.userID
+            })
+          } catch(err2) {
+            console.log(err)
+          }
+        }
       })
     })
 

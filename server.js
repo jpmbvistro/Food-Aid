@@ -52,7 +52,7 @@ var db
 mongoose.connect(DB_URL, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilio, twilioVars);
+  require('./app/routes.js')(app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars);
 });
 
 require('./config/passport')(passport); // pass passport for configuration

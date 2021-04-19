@@ -62,3 +62,16 @@ Handling Global Variables and when to refactor code to be cleaner (more variable
 
 
 Worried about best practices with client SDK because of limitations of API billing
+
+Conversation States
+
+understanding that the role of the server is to serve auth tokens and handle creating conversations during posts
+
+Ideally a new Twilio conversation would not be started if both participants already have an active conversation for another topic. BUT I don't know how to do that yet and I wanna ship this.
+
+putting certain code after res.send()
+
+to do, on fully completed task, disable chat
+write client side requests
+write client side chat UI
+test
