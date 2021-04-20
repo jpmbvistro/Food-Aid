@@ -40,13 +40,13 @@ class TokenGenerator {
       this.TWILIO_API_SECRET,
       {identity: identity+''}
     );
-    console.log('==========Identity Token Gen===========')
-    console.log(identity)
-
-    // Assign the provided identity or generate a new one
-    // token.identity = identity || nameGenerator();
-    console.log(token)
-    console.log(token.toJwt())
+    // console.log('==========Identity Token Gen===========')
+    // console.log(identity)
+    //
+    // // Assign the provided identity or generate a new one
+    // // token.identity = identity || nameGenerator();
+    // console.log(token)
+    // console.log(token.toJwt())
 
     // Grant the access token Twilio Video capabilities
     // const videoGrant = new this.VideoGrant();

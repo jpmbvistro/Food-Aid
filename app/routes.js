@@ -240,22 +240,24 @@ module.exports = function(
         userID: ObjectId(req.user._id)
       }, (err, result) => {
         if(err) return res.send(err)
-        async () =>{
+        async function help(){
           try{
             console.log('Creating Conversation...')
-            let conversationSid = await client.conversations.conversations.create()
+            let conversation = await client.conversations.conversations.create()
             console.log('Conversation Completed')
             console.log('Finding foodAid, setting to pending...')
+            // console.log(`Type of Conversation SID: ${typeof conversation}`)
+            // console.log(conversation)
             let response = await db.collection('foodAid').findOneAndUpdate({
               _id: ObjectId(req.body.aidID)
             }, {
               $set:
                 {
                   status: 'pending',
-                  requestor: result.displayName,
+                  requestorName: result.displayName,
                   requestorID: req.user._id,
                   reqType: req.body.reqType,
-                  twilioConversationSID: conversationSid
+                  twilioConversationSID: conversation.sid
                 }
             }, {
               sort: {_id: -1},
@@ -265,28 +267,31 @@ module.exports = function(
             let userSID = ''
             //if this user doesn't have twilioIdentity create one and save
             if(result.twilioIdentitySID===null){
+              console.log('Creating user twilio SID')
                userSID = await client.conversations.users.create({
-                identity: req.user._id,
-                friendlyName: result.displayName,
-                roleSid: 'RL78a3fffe2d80418db969d07acd06ada6'
+                identity: `${req.user._id}`,
               })
+              console.log('updating user settings to match twilioSID')
               await db.collection('userSettings').findOneAndUpdate({userID:ObjectId(result._id)},{
                 $set:
                 {
                   twilioIdentitySID:userSID
                 }
               })
+              console.log('Created and Updated user TwilioSid')
             }
+            console.log('adding user as a participant')
             //Also add this user to the created conversation
-            let userParticipantSid = await client.conversations.conversations(conversationSid).participants.create({
-              identity: req.user._id
+            let userParticipantSid = await client.conversations.conversations(conversation.sid).participants.create({
+              identity: `${req.user._id}`,
+              friendlyName: result.displayName
             })
             res.send(response)
 
             //Check and create a twilioIdentity for person who posted the resource
             //creating this resource should not affect the current user's ability to use the apt -> after res.send
             let posterSID = ''
-
+            console.log('Creating Author twilio SID')
             let posterUser = await db.collection('userSettings').findOne({
               userID:ObjectId(response.value.authorID)})
             if(posterUser.twilioIdentitySID===null){
@@ -301,13 +306,15 @@ module.exports = function(
                 }
               })
             }
-            await client.conversations.conversations(conversationSid).participants.create({
+            await client.conversations.conversations(conversation.sid).participants.create({
               identity: posterUser.userID
             })
           } catch(err2) {
-            console.log(err)
+            console.log('Error!')
+            console.log(err2)
           }
         }
+        help()
       })
     })
 

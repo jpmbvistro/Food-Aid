@@ -87,3 +87,7 @@ have requesting aid auto forward to the chat on client side.
 creating a custom error for when req w/o conversation
 
 Check API key for Error re: token generation; Turns out it was a type error re: identity as string
+-Twlio Client successful
+
+Error During twilio conversation creation during put 'cyclic dependency detected'
+trying to Save an object

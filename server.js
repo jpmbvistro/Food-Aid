@@ -44,8 +44,6 @@ const twilioVars = {
 ==========Twilio Setup=========
 *******************************/
 var tokenGenerator = new tokenGeneratorModule(twilio, twilioVars, nameGenerator)
-console.log('Token Generator: ')
-console.log(tokenGenerator)
 var client = new twilio(twilioVars.TWILIO_ACCOUNT_SID, twilioVars.TWILIO_AUTH_TOKEN)
 
 /******************************
