@@ -5,7 +5,7 @@
     <section class='main'>
       <%- include('./dashboard/header.ejs') %>
       <section id='chat' class='chat'>
-        <input type="hidden" name="conversationSid" value="<%= conversationSid %>">
+        <input type="hidden" name="conversationsSid" value="<%= conversationsSid %>">
         <div id='chat-display' class="chat-display flex-container flex-column">
 
         </div>
@@ -20,7 +20,7 @@
     </section>
 
     <%- include('./dashboard/aside.ejs') %>
-    <script src="https://media.twiliocdn.com/sdk/js/chat/v4.0/twilio-chat.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/v1.1/twilio-conversations.min.js"></script>
     <script type="text/javascript" src='../js/main.js' ></script>
     <script type="text/javascript" src='../js/twilio.js'></script>
 

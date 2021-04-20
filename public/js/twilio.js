@@ -1,7 +1,7 @@
 let twilioClient = null
 const chat = document.querySelector('#chat')
 
-async function getToken()=>{
+async function getToken(){
   try {
     let responseStream = await fetch('token', {
       method: 'get',
@@ -9,10 +9,11 @@ async function getToken()=>{
 
     })
     if(responseStream.ok){
-      let token = await responseStream.json()
-      let token = token.token
-      console.log(responseJSON)
-      return token
+      let tokenItem = await responseStream.json()
+
+      // console.log(tokenItem.token)
+      // console.log(tokenItem.identity)
+      return tokenItem.token
     }
   } catch(err) {
     throw Error(err)
@@ -33,11 +34,12 @@ async function refreshToken(){
 async function initTwilio(){
   try {
     if(twilioClient===null){
-      token = await getToken()
-      twilioClient = await Twilio.Conversation.Client.create(token)
+      let token = await getToken()
+      twilioClient = await Twilio.Conversations.Client.create(token)
     }
-    twilioClient.addEventListener('tokenAboutToExpire', refreshToken)
-    twilioClient.addEventListener('tokenAboutToExpire', refreshToken)
+    console.log(twilioClient)
+    twilioClient.on('tokenAboutToExpire', refreshToken)
+    twilioClient.on('tokenAboutToExpire', refreshToken)
   } catch(err) {
     console.log("Failed initialize Twilio Client")
     console.log(err)
@@ -48,7 +50,7 @@ async function initTwilio(){
 
 async function init(){
   try {
-    await initTWilio()
+    await initTwilio()
     if(chat){
       let conversation = await twilioClient.getConversationBySid(document.querySelector("input[name='conversationSid']").value)
       conversation.addEventListener('messageAdded',)
@@ -58,7 +60,7 @@ async function init(){
       messagesPaginator.items.forEach((item,index)=>{renderMessage(item,index)})
       for await (const item of messagesPaginator.items){renderMessage(item)}
       //future iteration disable function call until previous completion
-      chatinput.addEventListener('keydown',item=>{
+      chatinput.addEventListener('keydown',async item=>{
         if(item.keyCode===13) await submitChat()
       })
 
@@ -98,6 +100,7 @@ async function init(){
   }
   catch (error) {
     console.log('Error initializing')
+    console.log(error)
   }
 }
 

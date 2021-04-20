@@ -21,7 +21,7 @@ class TokenGenerator {
     // this.VideoGrant = this.AccessToken.VideoGrant;
     // this.SyncGrant = this.AccessToken.SyncGrant;
   }
-}
+
 
   // /**
   //  * Generate an Access Token for an application user - it generates a random
@@ -32,16 +32,21 @@ class TokenGenerator {
   //  *         {Object.identity} String random indentity
   //  *         {Object.token} String token generated
   //  */
-  function tokenGenerate(identity = 0) {
+  tokenGenerate(identity = 0) {
     // Create an access token which we will sign and return to the client
     const token = new this.AccessToken(
       this.TWILIO_ACCOUNT_SID,
       this.TWILIO_API_KEY,
-      this.TWILIO_API_SECRET
+      this.TWILIO_API_SECRET,
+      {identity: identity+''}
     );
+    console.log('==========Identity Token Gen===========')
+    console.log(identity)
 
     // Assign the provided identity or generate a new one
-    token.identity = identity || nameGenerator();
+    // token.identity = identity || nameGenerator();
+    console.log(token)
+    console.log(token.toJwt())
 
     // Grant the access token Twilio Video capabilities
     // const videoGrant = new this.VideoGrant();
@@ -71,5 +76,5 @@ class TokenGenerator {
       token: token.toJwt()
     };
   }
-
+}
 module.exports = TokenGenerator;

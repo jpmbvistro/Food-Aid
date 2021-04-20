@@ -18,6 +18,7 @@ var morgan       = require('morgan');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var twilio = require('twilio')
+var tokenGeneratorModule = require('./app/token-generator.js')
 
 // var configDB = require('./config/database.js');
 
@@ -29,21 +30,23 @@ const DB_NAME = process.env.DB_NAME
 const DB_URL =process.env.DB_URL+`/${DB_NAME}`
 const PORT = process.env.PORT || 3000
 const twilioVars = {
-  TWILIO_AUTH_TOKEN : process.env.TWILIO_AUTH_TOKEN
-  TWILIO_ACCOUNT_SID : process.env.TWILIO_ACCOUNT_SID
-  TWILIO_API_KEY : process.env.TWILIO_API_KEY
-  TWILIO_API_SECRET : process.env.TWILIO_API_SECRET
-  TWILIO_CHAT_SERVICE_SID : process.env.TWILIO_CHAT_SERVICE_SID
-  TWILIO_CONVERSATIONS_SERVICE_SID : process.process.env.TWILIO_CONVERSATIONS_SERVICE_SID}
-console.log(`*********URL : ${DB_URL}`)
+  TWILIO_AUTH_TOKEN : process.env.TWILIO_AUTH_TOKEN,
+  TWILIO_ACCOUNT_SID : process.env.TWILIO_ACCOUNT_SID,
+  TWILIO_API_KEY : process.env.TWILIO_API_KEY,
+  TWILIO_API_SECRET : process.env.TWILIO_API_SECRET,
+  TWILIO_CHAT_SERVICE_SID : process.env.TWILIO_CHAT_SERVICE_SID,
+  TWILIO_CONVERSATIONS_SERVICE_SID : process.env.TWILIO_CONVERSATIONS_SERVICE_SID}
+// console.log(`*********URL : ${DB_URL}`)
 
 
 
 /******************************
 ==========Twilio Setup=========
 *******************************/
-var tokenGenerator = new require('./app/token-generator.js')(twilio, twilioVars, nameGenerator)
-var client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+var tokenGenerator = new tokenGeneratorModule(twilio, twilioVars, nameGenerator)
+console.log('Token Generator: ')
+console.log(tokenGenerator)
+var client = new twilio(twilioVars.TWILIO_ACCOUNT_SID, twilioVars.TWILIO_AUTH_TOKEN)
 
 /******************************
 =========Mongo Config=========

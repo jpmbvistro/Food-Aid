@@ -85,3 +85,5 @@ Ensure that dashboard only renders tasks with active message paths if
 have requesting aid auto forward to the chat on client side.
 
 creating a custom error for when req w/o conversation
+
+Check API key for Error re: token generation; Turns out it was a type error re: identity as string

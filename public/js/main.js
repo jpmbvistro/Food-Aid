@@ -3,6 +3,7 @@
 ==================================*/
 Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
   item.addEventListener('click', element=>{
+    console.log('requesting Aid!')
     let card = element.currentTarget.parentElement.parentElement.parentElement
     fetch('request', {
       method: 'put',

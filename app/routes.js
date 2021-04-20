@@ -28,21 +28,21 @@ module.exports = function(
       })
     })
 
-    app.get('/onboard', function(req, res) {
+    app.get('/onboard', isLoggedIn, function(req, res) {
       res.render('onboard.ejs', {
         title: 'Onboarding'
       })
     })
 
-    app.get('/chat/:aidID', async (req, res) => {
+    app.get('/chat/:aidID', isLoggedIn, async (req, res) => {
       try {
         let response = await db.collection('foodAid').findOne({
-          id: ObjectId(req.params.aidID)
+          _id: ObjectId(req.params.aidID)
         })
         //FUTURE: can validate that req.user is part of the conversation
-        if(response.twilioConversationSID){
+        if(req.params.aidID && response.twilioConversationsSID){
           res.render('chat.ejs', {
-            conversationSid: response.twilioConversationSID,
+            conversationsSid: response.twilioConversationSID,
             title: 'Chat'
           })
         }
@@ -68,13 +68,13 @@ module.exports = function(
     /********************************
     =====Load Dashboard Content=====
     ********************************/
-    app.get('/dashboard', function(req, res) {
+    app.get('/dashboard', isLoggedIn, function(req, res) {
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
       }, (err , result) =>{
         if(err) return console.log(err)
-        console.log('===============Did I find the user?===========')
-        console.log(result)
+        // console.log('===============Did I find the user?===========')
+        // console.log(result)
 
         //If the userSettings Exists query foodAid utilizing userSettings
         if(result) {
@@ -110,7 +110,7 @@ module.exports = function(
           //Find relevant foodAid
           db.collection('foodAid').find(searchFilter).toArray((err2, result2) => {
             if(err2) return console.log(err2)
-            console.log(result2)
+            // console.log(result2)
             let foodAid = result2.map(item2=>{
               //insert distance calculation here
               item2.canWalk = true
@@ -235,6 +235,7 @@ module.exports = function(
     ==========Request Posted Food Aid========
     ========================================*/
     app.put('/request', function(req, res) {
+      console.log("somoene's requesting aid!")
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
       }, (err, result) => {
@@ -271,7 +272,7 @@ module.exports = function(
                 {
                   twilioIdentitySID:userSID
                 }
-              }
+              })
             }
             //Also add this user to the created conversation
             let userParticipantSid = await client.conversations.conversations(conversationSid).participants.create({
@@ -312,6 +313,7 @@ module.exports = function(
     ==========Complete Posted Food Aid========
     ========================================*/
     app.put('/complete', function(req, res) {
+      console.log("Complete REquest!")
       db.collection('foodAid').findOne({
         _id: ObjectId(req.body.aidID)
       }, (err, result) => {
@@ -364,8 +366,8 @@ module.exports = function(
       // accessToken.addGrant(chatGrant);
       // accessToken.identity = identity;
       let {token, identity} = tokenGenerator.tokenGenerate(req.user._id)
-      response.set('Content-Type', 'application/json');
-      response.send(JSON.stringify({
+      res.set('Content-Type', 'application/json');
+      res.send(JSON.stringify({
         token: token,
         identity: identity
       }));
