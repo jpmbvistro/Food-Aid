@@ -91,3 +91,5 @@ Check API key for Error re: token generation; Turns out it was a type error re: 
 
 Error During twilio conversation creation during put 'cyclic dependency detected'
 trying to Save an object
+
+resources getting sent

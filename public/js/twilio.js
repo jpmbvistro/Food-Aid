@@ -3,7 +3,7 @@ const chat = document.querySelector('#chat')
 
 async function getToken(){
   try {
-    let responseStream = await fetch('token', {
+    let responseStream = await fetch('../token', {
       method: 'get',
       headers: {'Content-Type': 'application/json'},
 
@@ -52,15 +52,15 @@ async function init(){
   try {
     await initTwilio()
     if(chat){
-      let conversation = await twilioClient.getConversationBySid(document.querySelector("input[name='conversationSid']").value)
-      conversation.addEventListener('messageAdded',)
+      let conversation = await twilioClient.getConversationBySid(document.querySelector("input[name='conversationsSid']").value)
+      conversation.on('messageAdded',renderMessage)
       let messagesPaginator = await conversation.getMessages(10)
       let chatDisplay = document.querySelector('#chat-display')
       let chatInput = document.querySelector('#chat-input')
       messagesPaginator.items.forEach((item,index)=>{renderMessage(item,index)})
       for await (const item of messagesPaginator.items){renderMessage(item)}
       //future iteration disable function call until previous completion
-      chatinput.addEventListener('keydown',async item=>{
+      chatInput.addEventListener('keydown',async item=>{
         if(item.keyCode===13) await submitChat()
       })
 
@@ -83,7 +83,7 @@ async function init(){
         chatBody.innerText = message.body
         let chatDetail = document.createElement('p')
         chatDetail.classList.add('chat-detail')
-        chatDetail.innerText = `By ${message.author} @ ${dateCreated}`
+        chatDetail.innerText = `By ${message.author} @ ${message.dateCreated}`
         chatBubble.appendChild(chatBody)
         chatBubble.appendChild(chatDetail)
         chatDisplay.appendChild(chatBubble)

@@ -32,7 +32,7 @@ class TokenGenerator {
   //  *         {Object.identity} String random indentity
   //  *         {Object.token} String token generated
   //  */
-  tokenGenerate(identity = 0) {
+  async tokenGenerate(identity = 0) {
     // Create an access token which we will sign and return to the client
     const token = new this.AccessToken(
       this.TWILIO_ACCOUNT_SID,
