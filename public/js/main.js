@@ -1,8 +1,9 @@
-/*================================
-Request functionality
-===============================*/
+/*=================================
+=====Request Aid functionality=====
+==================================*/
 Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
   item.addEventListener('click', element=>{
+    console.log('requesting Aid!')
     let card = element.currentTarget.parentElement.parentElement.parentElement
     fetch('request', {
       method: 'put',
@@ -57,7 +58,9 @@ Array.from(document.querySelectorAll('complete-exchange-button')).forEach((item,
   })
 })
 
-
+/*================================
+===========Nav to Chat============
+=================================*/
 
 
 

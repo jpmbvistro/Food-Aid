@@ -45,3 +45,45 @@ Updating Filters:
   -Completed filters
 
 User security by removing non current user id's
+
+
+
+Scary Learning TWilio since there are so many moving pieces.
+
+Learning about client side SDKs
+
+translating JQuery to vanilla JS
+
+tokenGeneration and handling
+
+translating syntax across twilio technologies
+
+Handling Global Variables and when to refactor code to be cleaner (more variables)
+
+
+Worried about best practices with client SDK because of limitations of API billing
+
+Conversation States
+
+understanding that the role of the server is to serve auth tokens and handle creating conversations during posts
+
+Ideally a new Twilio conversation would not be started if both participants already have an active conversation for another topic. BUT I don't know how to do that yet and I wanna ship this.
+
+putting certain code after res.send()
+
+to do, on fully completed task, disable chat
+write client side requests
+write client side chat UI
+test
+
+cannot use messages because requires more numbers
+
+does console logging errors essentially help make a stack trace of where errors come from?
+functionality in chatWindow completed. Need to link to it.
+
+Ensure that dashboard only renders tasks with active message paths if
+have requesting aid auto forward to the chat on client side.
+
+creating a custom error for when req w/o conversation
+
+Check API key for Error re: token generation; Turns out it was a type error re: identity as string

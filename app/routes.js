@@ -1,4 +1,5 @@
-module.exports = function(app, db, passport, uniqid, ObjectId) {
+module.exports = function(
+  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars) {
 
 
 /********************
@@ -27,11 +28,37 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
       })
     })
 
-      app.get('/onboard', function(req, res) {
-        res.render('onboard.ejs', {
-          title: 'Onboarding'
-        })
+    app.get('/onboard', isLoggedIn, function(req, res) {
+      res.render('onboard.ejs', {
+        title: 'Onboarding'
       })
+    })
+
+    app.get('/chat/:aidID', isLoggedIn, async (req, res) => {
+      try {
+        let response = await db.collection('foodAid').findOne({
+          _id: ObjectId(req.params.aidID)
+        })
+        //FUTURE: can validate that req.user is part of the conversation
+        if(req.params.aidID && response.twilioConversationsSID){
+          res.render('chat.ejs', {
+            conversationsSid: response.twilioConversationSID,
+            title: 'Chat'
+          })
+        }
+        else {
+          throw 'No Conversation'
+        }
+
+      } catch (e) {
+        console.log(e)
+        if(e==='No Conversation') res.status(400).send({
+          message: e
+        })
+      } finally {
+
+      }
+    })
 
     /*************************************************
     ===============Dashboard routes===================
@@ -41,13 +68,13 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
     /********************************
     =====Load Dashboard Content=====
     ********************************/
-    app.get('/dashboard', function(req, res) {
+    app.get('/dashboard', isLoggedIn, function(req, res) {
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
       }, (err , result) =>{
         if(err) return console.log(err)
-        console.log('===============Did I find the user?===========')
-        console.log(result)
+        // console.log('===============Did I find the user?===========')
+        // console.log(result)
 
         //If the userSettings Exists query foodAid utilizing userSettings
         if(result) {
@@ -83,7 +110,7 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           //Find relevant foodAid
           db.collection('foodAid').find(searchFilter).toArray((err2, result2) => {
             if(err2) return console.log(err2)
-            console.log(result2)
+            // console.log(result2)
             let foodAid = result2.map(item2=>{
               //insert distance calculation here
               item2.canWalk = true
@@ -156,7 +183,8 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
         wantsGarden: Boolean(req.body.wantsGarden),
         wantsPrepacked: Boolean(req.body.wantsPrepacked),
         address: req.body.address,
-        userDistance: Number(req.body.userDistance)
+        userDistance: Number(req.body.userDistance),
+        twilioIdentitySID: null
       }, (err, result) => {
         if (err){console.log(err)
           // res.redirect('/dashboard')
@@ -194,7 +222,8 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
           complete: {
             posterComplete: false,
             requestorComplete:false
-          }
+          },
+          twilioConversationSID: null
         }, (err2, result2) => {
           if (err2) return console.log(err2)
           res.send(result2)
@@ -206,27 +235,76 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
     ==========Request Posted Food Aid========
     ========================================*/
     app.put('/request', function(req, res) {
+      console.log("somoene's requesting aid!")
       db.collection('userSettings').findOne({
         userID: ObjectId(req.user._id)
       }, (err, result) => {
         if(err) return res.send(err)
-        db.collection('foodAid').findOneAndUpdate({
-          _id: ObjectId(req.body.aidID)
-        }, {
-          $set:
-            {
-              status: 'pending',
-              requestor: result.displayName,
-              requestorID: req.user._id,
-              reqType: req.body.reqType
+        async () =>{
+          try{
+            let conversationSid = await client.conversations.conversations.create()
+            let response = await db.collection('foodAid').findOneAndUpdate({
+              _id: ObjectId(req.body.aidID)
+            }, {
+              $set:
+                {
+                  status: 'pending',
+                  requestor: result.displayName,
+                  requestorID: req.user._id,
+                  reqType: req.body.reqType,
+                  twilioConversationSID: conversationSid
+                }
+            }, {
+              sort: {_id: -1},
+              upsert:true
+            })
+
+            let userSID = ''
+            //if this user doesn't have twilioIdentity create one and save
+            if(result.twilioIdentitySID===null){
+               userSID = await client.conversations.users.create({
+                identity: req.user._id,
+                friendlyName: result.displayName,
+                roleSid: 'RL78a3fffe2d80418db969d07acd06ada6'
+              })
+              await db.collection('userSettings').findOneAndUpdate({userID:ObjectId(result._id)},{
+                $set:
+                {
+                  twilioIdentitySID:userSID
+                }
+              })
             }
-        }, {
-          sort: {_id: -1},
-          upsert:true
-        }, (err2, result2) => {
-          if(err2) return res.send(err2)
-          res.send(result2)
-        })
+            //Also add this user to the created conversation
+            let userParticipantSid = await client.conversations.conversations(conversationSid).participants.create({
+              identity: req.user._id
+            })
+            res.send(response)
+
+            //Check and create a twilioIdentity for person who posted the resource
+            //creating this resource should not affect the current user's ability to use the apt -> after res.send
+            let posterSID = ''
+
+            let posterUser = await db.collection('userSettings').findOne({
+              userID:ObjectId(response.value.authorID)})
+            if(posterUser.twilioIdentitySID===null){
+              posterSID = await client.conversations.users.create({
+                identity: posterUser.authorID,
+                friendlyName: posterUser.displayName,
+                roleSid: 'RL78a3fffe2d80418db969d07acd06ada6'
+              })
+              await db.collection('userSettings').findOneAndUpdate({userID: ObjectId(posterUser._id)},{
+                $set: {
+                  twilioIdentitySID:posterSID
+                }
+              })
+            }
+            await client.conversations.conversations(conversationSid).participants.create({
+              identity: posterUser.userID
+            })
+          } catch(err2) {
+            console.log(err)
+          }
+        }
       })
     })
 
@@ -235,6 +313,7 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
     ==========Complete Posted Food Aid========
     ========================================*/
     app.put('/complete', function(req, res) {
+      console.log("Complete REquest!")
       db.collection('foodAid').findOne({
         _id: ObjectId(req.body.aidID)
       }, (err, result) => {
@@ -274,6 +353,29 @@ module.exports = function(app, db, passport, uniqid, ObjectId) {
 
       })
     })
+
+    // =============================================================================
+    // Twilio Routes================================================================
+    // =============================================================================
+    app.get('/token', isLoggedIn, (req, res) => {
+      // const identity = request.params.identity;
+      // const accessToken = new twilio.jwt.AccessToken(config.twilio.accountSid, config.twilio.apiKey, config.twilio.apiSecret);
+      // const chatGrant = new twilio.jwt.AccessToken.ChatGrant({
+      //   serviceSid: config.twilio.chatServiceSid,
+      // });
+      // accessToken.addGrant(chatGrant);
+      // accessToken.identity = identity;
+      let {token, identity} = tokenGenerator.tokenGenerate(req.user._id)
+      res.set('Content-Type', 'application/json');
+      res.send(JSON.stringify({
+        token: token,
+        identity: identity
+      }));
+    })
+
+
+
+
 
     // =============================================================================
     // AUTHENTICATE (FIRST LOGIN) ==================================================
