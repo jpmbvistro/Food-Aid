@@ -242,7 +242,10 @@ module.exports = function(
         if(err) return res.send(err)
         async () =>{
           try{
+            console.log('Creating Conversation...')
             let conversationSid = await client.conversations.conversations.create()
+            console.log('Conversation Completed')
+            console.log('Finding foodAid, setting to pending...')
             let response = await db.collection('foodAid').findOneAndUpdate({
               _id: ObjectId(req.body.aidID)
             }, {
@@ -258,7 +261,7 @@ module.exports = function(
               sort: {_id: -1},
               upsert:true
             })
-
+            console.log('DB update success')
             let userSID = ''
             //if this user doesn't have twilioIdentity create one and save
             if(result.twilioIdentitySID===null){
