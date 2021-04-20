@@ -2,9 +2,14 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
+    <link rel="stylesheet" href="../css/chat.css">
     <section class='main'>
-      <%- include('./dashboard/header.ejs') %>
       <section id='chat' class='chat'>
+        <div class="chat-header">
+          <div class="">
+
+          </div>
+        </div>
         <input type="hidden" name="conversationsSid" value="<%= conversationsSid %>">
         <div id='chat-display' class="chat-display flex-container flex-column">
 
@@ -16,7 +21,6 @@
           </button>
         </div>
       </section>
-      <div class="prev-arrow"><</div>
     </section>
 
     <%- include('./dashboard/aside.ejs') %>

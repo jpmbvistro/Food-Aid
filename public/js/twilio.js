@@ -57,7 +57,7 @@ async function init(){
       let messagesPaginator = await conversation.getMessages(10)
       let chatDisplay = document.querySelector('#chat-display')
       let chatInput = document.querySelector('#chat-input')
-      messagesPaginator.items.forEach((item,index)=>{renderMessage(item,index)})
+      // messagesPaginator.items.forEach((item,index)=>{renderMessage(item,index)})
       for await (const item of messagesPaginator.items){renderMessage(item)}
       //future iteration disable function call until previous completion
       chatInput.addEventListener('keydown',async item=>{
