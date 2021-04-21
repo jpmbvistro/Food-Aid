@@ -44,14 +44,25 @@ module.exports = function(
         })
 
         console.log('Checking if AidID exists')
-        console.log(aidId)
-        console.log(response)
-        console.log(aidId !==null && response.twilioConversationsSID !== null)
+        console.log(req.user._id)
+        console.log(response.authorID)
+        console.log(req.user._id)
+        console.log(response.requestorID)
+        // console.log(aidId !==null && response.twilioConversationsSID !== null)
+        let authorName = req.user._id+"" === response.authorID+"" ? 'You' : response.authorName
+        let requestorName = req.user._id+"" === response.requestorID+"" ? 'You' : response.requestorName
+        let authorId = response.authorID
+        let requestorId = response.requestorID
+        let participants = {
+          [authorId]: authorName,
+          [requestorId]: requestorName
+        }
         //FUTURE: can validate that req.user is part of the conversation
         if(req.params.aidID && response.twilioConversationsSID){
           res.render('chat.ejs', {
             conversationsSid: response.twilioConversationsSID,
-            title: 'Chat'
+            title: 'Chat',
+            participants: participants
           })
         }
         else {

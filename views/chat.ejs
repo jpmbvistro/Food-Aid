@@ -4,20 +4,21 @@
   <body>
     <link rel="stylesheet" href="../css/chat.css">
     <section class='main'>
-      <section id='chat' class='chat'>
-        <div class="chat-header">
-          <div class="">
-
-          </div>
+      <section id='chat' class='chat flex-container flex-column'>
+        <div class="chat-header flex-container">
+          <button id='back-button' class='back-button' type="button" name="button">
+            <img src="../img/icons/back.png" alt="Back to dashboard">
+          </button>
+          <h1><%=  Object.values(participants).filter(item=>item!=='You')[0] %></h1>
         </div>
         <input type="hidden" name="conversationsSid" value="<%= conversationsSid %>">
         <div id='chat-display' class="chat-display flex-container flex-column">
 
         </div>
-        <div class="chat-input-container">
+        <div class="chat-input-container flex-container">
           <input id='chat-input' class='chat-input' type="text" name="input-message" placeholder="Whatcha thinkin'?"value="">
-          <button id='submit-chat-button' type="button" name="submit-chat">
-            Submit
+          <button id='submit-chat-button' class="submit-chat-button" type="button" name="submit-chat">
+            <img src="../img/icons/send.png" alt="Send Message">
           </button>
         </div>
       </section>
@@ -26,7 +27,11 @@
     <%- include('./dashboard/aside.ejs') %>
     <script src="https://media.twiliocdn.com/sdk/js/conversations/v1.1/twilio-conversations.min.js"></script>
     <script type="text/javascript" src='../js/main.js' ></script>
-    <script type="text/javascript" src='../js/twilio.js'></script>
+    <script type="text/javascript">
+      var Participants = <%- JSON.stringify(participants) %>
+    </script>
+    <script type="text/javascript" src='../js/twilio.js'>
+    </script>
 
     </script>
 

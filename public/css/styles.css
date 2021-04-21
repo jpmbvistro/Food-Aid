@@ -24,6 +24,10 @@
 ===Base Styles====
 *******************/
 
+button {
+  cursor: pointer;
+}
+
 h1{
   text-transform: uppercase;
   font-size: min(15vw,3rem);

@@ -57,8 +57,16 @@ async function init(){
       let messagesPaginator = await conversation.getMessages(10)
       let chatDisplay = document.querySelector('#chat-display')
       let chatInput = document.querySelector('#chat-input')
-      // messagesPaginator.items.forEach((item,index)=>{renderMessage(item,index)})
-      for await (const item of messagesPaginator.items){renderMessage(item)}
+
+      // for await (const item of messagesPaginator.items){renderMessage(item)}
+      console.log('mp');
+      console.log(messagesPaginator)
+      for(let i = 0 ; i < messagesPaginator.items.length ; i++) {
+        console.log("Printing...");
+        // console.log(messagesPaginator.items[i])
+        let bubble = await renderMessage(messagesPaginator.items[i])
+      }
+
       //future iteration disable function call until previous completion
       chatInput.addEventListener('keydown',async item=>{
         if(item.keyCode===13) await submitChat()
@@ -83,10 +91,12 @@ async function init(){
         chatBody.innerText = message.body
         let chatDetail = document.createElement('p')
         chatDetail.classList.add('chat-detail')
-        chatDetail.innerText = `By ${message.author} @ ${message.dateCreated}`
+        console.log(message.dateCreated)
+        chatDetail.innerText = `By ${Participants[message.author]} on ${message.dateCreated.toLocaleString('en-us', {  weekday: 'long' })} at ${message.dateCreated.getHours()}:${message.dateCreated.getMinutes()}`
         chatBubble.appendChild(chatBody)
         chatBubble.appendChild(chatDetail)
         chatDisplay.appendChild(chatBubble)
+        chatBubble.scrollIntoView()
       }
       async function submitChat() {
         let message = chatInput.value
@@ -104,6 +114,6 @@ async function init(){
   }
 }
 
-
+console.log(Participants)
 
 init()

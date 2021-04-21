@@ -1,0 +1,108 @@
+.main {
+  max-height: 100%;
+}
+
+.chat {
+  height: 100%;
+  width: 100%;
+  align-items: stretch;
+}
+
+.chat h1 {
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0 0 0 1rem;
+
+}
+
+.back-button img,
+.back-button{
+  height:100%;
+}
+
+.back-button {
+  border-radius: 50%;
+  padding: 0;
+  background: none;
+
+}
+
+.back-button img{
+  width: auto;
+}
+
+.submit-chat-button {
+  padding: .25rem;
+  min-height: 2rem;
+  min-width: 2rem;
+  border-radius: 50%;
+  background-color: rgba(237, 171, 171,1);
+  margin: 0 .25rem;
+}
+
+.submit-chat-button img {
+
+}
+
+.chat-header {
+  flex: 0 0;
+  padding: .5rem;
+  background-color: rgba(255,255,255,.5);
+  height: 3.8rem;
+  box-shadow: 0 .07rem 1px 0;
+  position: sticky;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.chat-display{
+  flex: 1 1 auto;
+  background color: white;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+.chat-input-container {
+  flex: 0 0;
+  padding: 1rem;
+}
+
+.chat-input-container  input {
+  padding: .5rem;
+  outline: none;
+  border: none;
+  flex: 1;
+  border-radius: 1rem;
+  text-align: right;
+}
+
+
+.chat-input-container button {
+  flex: 0 0;
+}
+
+.chat-bubble {
+  font-weight: 300;
+  color: white;
+  max-width: 80%;
+  padding: .5rem 1rem;
+  margin: .25rem 0;
+}
+
+.chat-detail {
+  font-size: .75rem;
+}
+
+.self{
+  align-self:flex-end;
+  border-radius: 1rem 1rem 0 1rem;
+  text-align: right;
+  background-color: rgb(32, 176, 125);
+}
+
+.other {
+  align-self: flex-start;
+  border-radius: 1rem 1rem 1rem 0;
+  text-align: left;
+  background-color: rgb(41,41,41);
+}
