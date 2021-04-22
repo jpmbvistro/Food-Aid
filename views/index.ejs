@@ -2,12 +2,17 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
-    <section class='main flex-container flex-xy-center flex-column'>
-      <h1>Food!</h1>
-      <img src="img/icons/success-icon.png" alt="Grocery Image">
+    <link rel="stylesheet" href="../css/entry.css">
+    <section class='main flex-container flex-xy-center flex-column entry index'>
+      <h1>Fruitfully</h1>
+      <h2>Community Resilience through Food Cooperation</h2>
+      <div class="entry-image-container">
+          <img class='entry-image' src="img/icons/success-icon.png" alt="Grocery Image">
+      </div>
+
       <div class="user-action-container flex-container flex-column flex-xy-center">
-        <a href="/login">Login</a>
-        <a href="/signup">Signup</a>
+        <a class='input-field login-link' href="/login">Login</a>
+        <a class='input-field signup-link' href="/signup">Signup</a>
       </div>
     </section>
 

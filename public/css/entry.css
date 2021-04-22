@@ -1,0 +1,95 @@
+.entry-header {
+  text-align: center;
+}
+
+.entry-form {
+  /* padding: 2rem; */
+  /* justify-content:space-between; */
+  height: 100%;
+  padding-top: 2rem;
+}
+
+.entry {
+  padding: 2rem;
+  justify-content: space-between;
+  /* min-height: 100vh; */
+  /* max-height: 100vh; */
+  min-height: 100%;
+  overflow: auto;
+}
+
+.entry-image {
+
+}
+
+.entry-image-container {
+  flex: 1;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.form-group + .form-group{
+  margin: 1.5rem 0;
+}
+
+.entry form p {
+  font-size: .75rem;
+  margin-left: 1rem;
+}
+
+.entry-submit {
+  background-color: rgba(237, 171, 171,1);
+  width: 100%;
+  padding: .75rem;
+  border-radius: 1rem;
+  /* font-weight: bold; */
+  font-size: 1rem;
+  border: none;
+  margin-top: .5rem;
+}
+
+.alert-container{
+  position: relative;
+}
+
+.alert {
+  position:absolute;
+}
+
+.signup h1 {
+  font-size: 2rem;
+  text-align: left;
+  font-weight: bold;
+}
+
+.signup h2 {
+  font-size: 1.2rem;
+}
+
+.index h1 {
+  margin-bottom: 2rem;
+}
+
+
+.index .input-field + .input-field {
+  margin-top: 1rem;
+}
+
+.index .input-field {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+.user-action-container {
+  width: 100%;
+}
+
+.index .login-link {
+  background-color: rgb(47,205,143);
+}
+
+.index .signup-link {
+  background: rgb(41,41,41);
+}

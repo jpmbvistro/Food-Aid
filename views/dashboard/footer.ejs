@@ -3,33 +3,53 @@
 
   <section class='new-contribution'>
     <h4>Contribute to the Project</h4>
-    <form class="" action="" method=''>
-      <label for="aid-submit-title">What are you contributing?</label>
-      <input id='aid-submit-title' type="text" name="title" placeholder='Bok Choy, Steel Cut Oats, etc...' value="">
-      <h5>Food Type</h5>
-
-      <input type="radio" name="foodType" value="fruit">
-      <label for="">Fruit</label>
-
-      <input type="radio" name="foodType" value="vegetable">
-      <label for="">Vegetable</label>
-
-      <input type="radio" name="foodType" value="grain">
-      <label for="">Grain</label>
-
-    
-
-      <div class="aid-origin">
-        <label for="is-garden-grown">
-          <span>Garden Grown</span>
-          <span>Prepacked</span>
-        </label>
+    <form class="contribution-form flex-container flex-column" action="" method=''>
+      <div class="text-field-container">
+        <label class='text-field-header' for="aid-submit-title">What are you contributing?</label>
+        <input class='text-field input-field' id='aid-submit-title' type="text" name="title" placeholder='Bok Choy, Steel Cut Oats, etc...' value="">
       </div>
-      <input class='toggle-switch-checkbox' id='is-garden-grown' type="checkbox" name="is-garden-grown" value="">
-      <label class='toggle-switch-label' for="is-garden-grown"></label>
+      <div class="food-type-selection">
+        <h5>Food Type</h5>
+        <div class="flex-container type-selector">
 
-      <label for="expiration-date-input">Expiration</label>
-      <input id='expiration-date-input' type="date" name="expiration" value="">
+          <label class='input-field' for="">
+            <input type="radio" name="foodType" value="fruit">
+            Fruit
+          </label>
+
+
+          <label class='input-field' for="">
+            <input type="radio" name="foodType" value="vegetable">
+            Vegetable
+          </label>
+
+
+          <label class='input-field' for="">
+            <input type="radio" name="foodType" value="grain">
+            Grain
+          </label>
+        </div>
+      </div>
+      <div class="aid-origin-container">
+        <div class="aid-origin">
+          <label for="is-garden-grown">
+            <span>Garden Grown</span>
+          </label>
+        </div>
+        <input class='toggle-switch-checkbox' id='is-garden-grown' type="checkbox" name="is-garden-grown" value="">
+        <label class='toggle-switch-label' for="is-garden-grown"></label>
+      </div>
+      <div class="expiration-container">
+        <label for="expiration-date-input">Expiration</label>
+        <input class='input-field' id='expiration-date-input' type="date" name="expiration" value="">
+      </div>
+
+
+
+
+
+
+
 
       <button id='submit-new-aid' type="button" name="button">Submit</button>
 

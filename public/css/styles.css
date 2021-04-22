@@ -401,6 +401,27 @@ img {
   visibility: hidden;
 }
 
+/*Forms*/
+.text-field-container {
+  position: relative;
+}
+
+.input-field {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: .75rem;
+  border-radius: 1rem;
+  border: 3px solid rgba(100,100,100,.3);
+}
+
+.text-field {
+  width: 100%;
+}
+
+.text-field-header {
+  position: absolute;
+  left: 1rem;
+  top: -1rem;
+  font-size: .75rem;
 
 
 
@@ -564,80 +585,12 @@ li + li{
   width: 100%;
 }
 
-.display .response {
-  font-size: min(30vw,10rem);
-  font-family: 'Raleway';
-  color: rgb(100,100,100);
-  transition: all .8s 2.2s ease;
-  opacity: 0;
-  transform: translateY(-100%);
-}
-
-.display.vibe .response {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.display .response-detail {
-  position: relative;
-  top: 2rem;
-  color: rgb(41,41,41);
-  transition: all .4s 3s ease-in-out;
-  transform: translateY(-200%);
-  opacity: 0;
-}
-
-.display.vibe .response-detail {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.vibe-select {
-  width: 2.5rem;
-}
-
-.vibeDisplay .response-container{
-  transition: transform .4s ease-out;
-  transform: translateY(0%);
-}
-
-.vibeDisplay {
-  cursor: pointer;
-}
-
-.vibeDisplay:hover .response-container{
-
-  transform: translateY(-3rem);
-}
 
 @media only screen and (max-width: 500px){
-  .main, .display{
-    height: 100vh;
+  .main,
+  .display{
+    min-height: 100vh;
     border-radius: 0;
-  }
-
-  .your-vibe {
-    flex-direction: column;
-    align-items: center;
-
-  }
-
-  .your-vibe button {
-    /* border-radius: 0; */
-  }
-
-  .your-vibe li{
-    margin-bottom: 0rem;
-  }
-
-  li+li{
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .vibeDisplay:hover .response-container{
-
-    transform: translateY(1rem);
   }
 }
 

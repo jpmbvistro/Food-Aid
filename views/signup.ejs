@@ -2,29 +2,31 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
-    <section class='main'>
-      <h1>Signup!</h1>
-      <% if (message.length > 0) { %>
-          <div class="alert alert-danger"><%= message %></div>
-      <% } %>
-      <section>
-        <!-- LOGIN FORM -->
-        <form action="/signup" method="post">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
-        </form>
-        <p>Need an account? <a href="/signup">Signup</a></p>
-
-      </section>
-
+    <link rel="stylesheet" href="../css/entry.css">
+    <section class='entry main flex-container flex-column signup'>
+      <h1>Great Communities Make Great Food!</h1>
+      <h2>Join us in building a more resilient community</h2>
+      <div class="entry-image-container">
+        <img class='entry-image' src="../img/icons/salad.png" alt="Welcome Back Image: almond milk">
+      </div>
+      <!-- LOGIN FORM -->
+      <form class='entry-form flex-container flex-column' action="/signup" method="post">
+          <div class="form-group text-field-container">
+              <label class='text-field-header'>Email</label>
+              <input type="text" placeholder="fruit@fully.com" class="form-control input-field text-field" name="email">
+          </div>
+          <div class="form-group text-field-container">
+              <label class='text-field-header'>Password</label>
+              <input type="password" placeholder="********" class="input-field text-field form-control" name="password">
+          </div>
+          <% if (message.length > 0) { %>
+            <div class='alert-container'><div class="alert alert-danger"><%= message %></div></div>
+          <% } %>
+          <div class="form-submission-content">
+            <p>Already have an account? <a href="/login">Log In</a></p>
+            <button type="submit" class="btn btn-warning btn-lg entry-submit">Login</button>
+          </div>
+      </form>
     </section>
   </body>
 </html>
