@@ -337,9 +337,6 @@ aside .profile-container img {
 Custom Layout Below
 *******************/
 
-.search {
-  display: none;
-}
 
 .aid-filters{
   margin-bottom: 1rem;
@@ -353,6 +350,7 @@ Custom Layout Below
 
 .in-progress {
   margin: .5rem;
+  flex: 1 1;
 }
 
 .suggested-aid-container,

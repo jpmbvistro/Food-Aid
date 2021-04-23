@@ -31,6 +31,29 @@ async function refreshToken(){
   }
 }
 
+async function updateTasks(){
+  try {
+    let response = await fetch('updateTasks', {
+      method: 'get',
+      headers: {'Content-Type': 'application/json'},
+    })
+    if(response.ok){
+      let data = await response.json()
+      data.body.tasks.forEach((item,i)=>{
+        let card = document.querySelector(`.action-card[data-aid-id='${item._id}']`)
+        if(card) {
+          let chatAction = card.querySelector('.chat-action')
+          item.twilioConversationsSID!==null ? chatAction.classList.remove('hide') : chatAction.classList.add('hide')
+          chatAction.setAttribute('href',`/chat/${data.body.twilioConversationsSID}`)
+        }
+      })
+    }
+  } catch (e) {
+    console.log('Error Fetching Task Update')
+    console.log(e)
+  }
+}
+
 async function notify(){
   console.log('Notifications!');
   let bellCounter = document.querySelector('.notification-bell-counter')
@@ -47,6 +70,9 @@ async function initTwilio(){
     twilioClient.on('tokenAboutToExpire', refreshToken)
     twilioClient.on('tokenAboutToExpire', refreshToken)
     twilioClient.on('pushNotification', notify)
+    twilioClient.on('conversationAdded', updateTasks)
+    twilioClient.on('conversationJoined', updateTasks)
+    twilioClient.on('conversationRemoved', updateTasks)
   } catch(err) {
     console.log("Failed initialize Twilio Client")
     console.log(err)
