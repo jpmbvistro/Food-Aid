@@ -4,9 +4,9 @@ Assisting in the organization of food mutual aid projects.
 
 ## Screenshots
 
-![Login Screenshot](screenshot/login.png)
+![Login Screenshot](screenshot/login.png) ![Dashboard Screenshot](screenshot/dashboard.png)
 
-![Dashboard Screenshot](screenshot/dashboard.png)
+
 
 
 #### Challenges
