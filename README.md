@@ -1,6 +1,12 @@
 # Food Aid
 
 Assisting in the organization of food mutual aid projects.
+
+## Screenshots
+
+![Login Screenshot](screenshot/dashboard.png)
+
+
 #### Challenges
 
 Securing sensitive data:

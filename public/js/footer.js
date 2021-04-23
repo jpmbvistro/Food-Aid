@@ -27,7 +27,7 @@ document.querySelector('#submit-new-aid').addEventListener('click', element => {
   .then(data => {
     submitAidAnimation('success')
     console.log(data)
-
+    setTimeout(_=>{window.location.reload(true)},3000)
 
   })
 })
