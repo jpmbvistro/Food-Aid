@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
+    <link rel="stylesheet" href="../css/dashboard.css">
     <section class='main'>
       <%- include('./dashboard/header.ejs') %>
 
@@ -97,7 +98,8 @@
         <ul class="next-actions flex-container flex-column">
           <% for(let i=0 ; i < actions.length ; i++) { %>
             <li>
-              <div class="card action-card flex-container">
+              <div data-conversation-sid='<%= actions[i].twilioConversationsSID %>' class="card action-card flex-container">
+                <span class='hide notifications flex-container flex-xy-center'></span>
                 <a href='/chat/<%= actions[i]._id %>' class="action-card-icon flex-container flex-xy-center">
                   <img src="img/card/chat.png" alt="message <%=actions[i].authorName%>">
                 </a>

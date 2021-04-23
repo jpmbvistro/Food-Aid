@@ -760,6 +760,17 @@ li + li{
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: .5rem;
   margin:.5rem;
+  position: relative;
+}
+
+.action-card .notifications {
+  position:absolute;
+  left: 0;
+  top: 0;
+  font-size: .75rem;
+  background-color: rgb(255,110,126);
+  color: black;
+  width: 1.2rem;
 }
 
 .action-card > * {
@@ -865,6 +876,21 @@ li + li{
 
 .flash-message-card img {
   width: 10rem;
+}
+
+.notification-bell {
+  position: relative;
+}
+
+.notification-bell-counter {
+  position:absolute;
+  left: 0;
+  top: 0;
+  font-size: .75rem;
+  background-color: rgb(255,110,126);
+  color: black;
+  width: 1.2rem;
+  border-radius:50%;
 }
 
 /************************

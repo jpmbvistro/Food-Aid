@@ -31,6 +31,12 @@ async function refreshToken(){
   }
 }
 
+async function notify(){
+  console.log('Notifications!');
+  let bellCounter = document.querySelector('.notification-bell-counter')
+  bellCounter.innerText = Number(bellCounter.innerText) + 1
+}
+
 async function initTwilio(){
   try {
     if(twilioClient===null){
@@ -40,6 +46,7 @@ async function initTwilio(){
     console.log(twilioClient)
     twilioClient.on('tokenAboutToExpire', refreshToken)
     twilioClient.on('tokenAboutToExpire', refreshToken)
+    twilioClient.on('pushNotification', notify)
   } catch(err) {
     console.log("Failed initialize Twilio Client")
     console.log(err)
@@ -51,6 +58,8 @@ async function initTwilio(){
 async function init(){
   try {
     await initTwilio()
+    console.log('user');
+    console.log(twilioClient.user)
     if(chat){
       let conversation = await twilioClient.getConversationBySid(document.querySelector("input[name='conversationsSid']").value)
       conversation.on('messageAdded',renderMessage)
@@ -105,15 +114,30 @@ async function init(){
         }
         chatInput.value = ''
       }
-
     }
+    //Setup messages notifications
+    Array.from(document.querySelectorAll('.action-card')).forEach(async item=>{
+      let conversationSid = item.getAttribute('data-conversation-sid')
+      if(conversationSid.length>0){
+        let conversation = await twilioClient.getConversationBySid(conversationSid)
+        conversation.on('messageAdded', notify)
+        console.log('checking for convo notificaitons')
+        console.log(conversation)
+        let notifications = await conversation.getUnreadMessagesCount()
+        console.log(notifications)
+        console.log('........')
+        if(notifications>0){
+          let notificationBadge = item.querySelector('notifications')
+          notificationBadge.classList.remove('hide')
+          notificationBadge.innerText = notifications
+        }
+      }
+    })
   }
   catch (error) {
     console.log('Error initializing')
     console.log(error)
   }
 }
-
-console.log(Participants)
 
 init()
