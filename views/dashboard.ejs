@@ -100,7 +100,7 @@
             <li>
               <div data-conversation-sid='<%= actions[i].twilioConversationsSID %>' class="card action-card flex-container">
                 <span class='hide notifications flex-container flex-xy-center'></span>
-                <a href='/chat/<%= actions[i]._id %>' class="action-card-icon flex-container flex-xy-center">
+                <a href='/chat/<%= actions[i]._id %>' class="action-card-icon flex-container flex-xy-center <% if(action[i].twilioConversationsSID === null) {%> hide <% } %>">
                   <img src="img/card/chat.png" alt="message <%=actions[i].authorName%>">
                 </a>
                 <div class="flex-container flex-column action-card-details">

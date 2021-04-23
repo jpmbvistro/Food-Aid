@@ -1,6 +1,6 @@
 footer {
   transition: all .4s ease;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   /* left: 0; */
   width: 100%;
@@ -8,7 +8,7 @@ footer {
   /* background-color: rgba(237, 171, 171,1); */
   background-color: rgba(222, 230, 243, 1);
   border-radius: 2rem 2rem 0 0;
-
+  overflow: hidden;
 }
 
 footer.expand {
@@ -33,6 +33,7 @@ footer .new-contribution {
   /* justify-content: flex-end; */
   padding-top: 0rem;
   padding: 0 2rem;
+
 }
 
 footer.expand .new-contribution {
