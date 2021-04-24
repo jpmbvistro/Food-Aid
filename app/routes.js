@@ -354,12 +354,33 @@ module.exports = function(
             if(err2) return res.send(err2)
             res.send(result2)
           })
-
         }
-
-
       })
     })
+
+    /*=======================================
+    ==========Update User Tasks==============
+    ========================================*/
+    app.get('updateTasks', isLoggedIn, async function(req, res){
+      try {
+        console.log('updating user tasks')
+        let newTasks = await db.collection('foodAid').find({ $or : [
+          { authorID : ObjectId(req.user._id)},
+          { $and : [
+            { requestorID : ObjectId(req.user._id) },
+            { status : 'pending' },
+          ]}
+        ]})
+        res.status(201).send({
+          tasks : newTasks
+        })
+      } catch (e) {
+
+      }
+
+
+    })
+
 
     // =============================================================================
     // Twilio Routes================================================================
