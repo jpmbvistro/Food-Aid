@@ -56,7 +56,8 @@ class TokenGenerator {
       // Create a "grant" which enables a client to use IPM as a given user,
       // on a given device
       const chatGrant = new this.ChatGrant({
-        serviceSid: this.TWILIO_CHAT_SERVICE_SID
+        serviceSid: this.TWILIO_CHAT_SERVICE_SID,
+        pushCredentialSid: 'CRdb39cfaa94b3fb6fe8bef33e98e45bdb'
       });
       token.addGrant(chatGrant);
     }

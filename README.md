@@ -103,3 +103,7 @@ trying to Save an object
 resources getting sent
 
 In Chat: fixed await call in async loop
+
+Ooops push notification is not for figuring out unread messages.
+
+testing during refactoring!

@@ -361,21 +361,25 @@ module.exports = function(
     /*=======================================
     ==========Update User Tasks==============
     ========================================*/
-    app.get('updateTasks', isLoggedIn, async function(req, res){
+    app.get('/updateTasks', isLoggedIn, async function(req, res){
       try {
         console.log('updating user tasks')
-        let newTasks = await db.collection('foodAid').find({ $or : [
+        let newTasks = Array.from(await db.collection('foodAid').find({ $or : [
           { authorID : ObjectId(req.user._id)},
           { $and : [
             { requestorID : ObjectId(req.user._id) },
             { status : 'pending' },
           ]}
-        ]})
-        res.status(201).send({
+        ]}))
+        console.log('done updating');
+        res.status(201).send(JSON.stringify({
           tasks : newTasks
-        })
+        }))
       } catch (e) {
-
+        console.log(e)
+        res.status(500).send({
+          message: 'Error updating user tasks'
+        })
       }
 
 

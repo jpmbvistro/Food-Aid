@@ -3,7 +3,7 @@
   <%- include('./partials/head.ejs') %>
   <body>
     <link rel="stylesheet" href="../css/chat.css">
-    <section class='main'>
+    <section data-twilio-id='chat' class='main'>
       <section id='chat' class='chat flex-container flex-column'>
         <div class="chat-header flex-container">
           <button id='back-button' class='back-button' type="button" name="button">
@@ -26,14 +26,13 @@
 
     <%- include('./dashboard/aside.ejs') %>
     <script src="https://media.twiliocdn.com/sdk/js/conversations/v1.1/twilio-conversations.min.js"></script>
-    <script type="text/javascript" src='../js/main.js' ></script>
+
     <script type="text/javascript">
       var Participants = <%- JSON.stringify(participants) %>
     </script>
-    <script type="text/javascript" src='../js/twilio.js'>
-    </script>
-
-    </script>
+    <script type='text/javascript' src='../js/chat.js'></script>
+    <script type="text/javascript" src='../js/twilio.js'></script>
+    <script type="text/javascript" src='../js/main.js' ></script>
 
   </body>
 </html>

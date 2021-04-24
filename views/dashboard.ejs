@@ -3,7 +3,7 @@
   <%- include('./partials/head.ejs') %>
   <body>
     <link rel="stylesheet" href="../css/dashboard.css">
-    <section class='main flex-container flex-column'>
+    <section data-twilio-id='dashboard' class='main flex-container flex-column'>
       <%- include('./dashboard/header.ejs') %>
 
       <section class='search hide'>
@@ -134,9 +134,9 @@
 
     <%- include('./dashboard/aside.ejs') %>
     <script src="https://media.twiliocdn.com/sdk/js/conversations/v1.1/twilio-conversations.min.js"></script>
-    <script type="text/javascript" src='js/main.js' ></script>
+    <script type="text/javascript" src='js/dashboard.js'></script>
     <script type="text/javascript" src='js/twilio.js'></script>
-
+    <script type="text/javascript" src='js/main.js' ></script>
 
 
   </body>
