@@ -1,6 +1,6 @@
 async function initChat(){
   let conversation = await twilioClient.getConversationBySid(document.querySelector("input[name='conversationsSid']").value)
-  conversation.on('messageAdded',renderMessage)
+  conversation.on('messageAdded',renderNewMessage)
   let messagesPaginator = await conversation.getMessages(10)
   let chatDisplay = document.querySelector('#chat-display')
   let chatInput = document.querySelector('#chat-input')
@@ -13,6 +13,11 @@ async function initChat(){
     // console.log(messagesPaginator.items[i])
     let bubble = await renderMessage(messagesPaginator.items[i])
   }
+  //set last rendered message as updated
+  let rest = await conversation.advanceLastReadMessageIndex(messagesPaginator.items[messagesPaginator.items.length-1].index)
+  console.log('leftover');
+  console.log(rest);
+  console.log(conversation.lastReadMessageIndex)
 
   //future iteration disable function call until previous completion
   chatInput.addEventListener('keydown',async item=>{
@@ -21,8 +26,18 @@ async function initChat(){
 
   document.querySelector('#submit-chat-button').addEventListener('click', submitChat)
 
+  /****
+  Mark new messages as 'read' when in chat window
+  Render to window
+  *****/
+  async function renderNewMessage(message){
+    await conversation.advanceLastReadMessageIndex(message.index)
+    await renderMessage(message)
+  }
 
-
+  /**
+  Renders new message and adds to chat window
+  **/
   async function renderMessage(message){
     try {
       //assume for now that all participants are chat participants

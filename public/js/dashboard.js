@@ -15,9 +15,10 @@ async function initDashboard() {
       console.log(notifications)
       console.log('........')
       if(notifications>0){
-        let notificationBadge = item.querySelector('notifications')
+        let notificationBadge = item.querySelector('.notification-badge')
         notificationBadge.classList.remove('hide')
-        notificationBadge.innerText = notifications
+        notificationBadge.querySelector('.badge-main').innerText = notifications
+        notificationBadge.querySelector('.badge-expand').innerText = ' unread messages'
       }
     }
   })

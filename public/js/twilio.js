@@ -52,6 +52,21 @@ async function init(){
     await initTwilio()
     console.log('user');
     console.log(twilioClient.user)
+
+      let convo = await twilioClient.getConversationBySid("CH3d1758516a1e4bd681170620275030b9")
+      let huh = await convo.getMessagesCount()
+      let brrr = await convo.getUnreadMessagesCount()
+
+      console.log("Check the convos bruh");
+      console.log(convo);
+      console.log(huh);
+      console.log(brrr);
+      console.log(convo.status)
+      let unreadMessages = await convo.getUnreadMessagesCount()
+      console.log(unreadMessages);
+      console.log(`Convo unread: ${unreadMessages}`);
+      console.log('done bruh');
+
     let domTwilioId = document.querySelector(".main").getAttribute('data-twilio-id')
     if( domTwilioId === 'dashboard' ){
       await initDashboard()
@@ -64,5 +79,7 @@ async function init(){
     console.log(error)
   }
 }
+
+
 
 init()

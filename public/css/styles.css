@@ -761,14 +761,45 @@ li + li{
   position: relative;
 }
 
-.action-card .notifications {
+.chat-action {
+  position: relative;
+}
+
+.notification-badge {
   position:absolute;
-  left: 0;
-  top: 0;
-  font-size: .75rem;
+  left: -.5rem;
+  top: -.5rem;
+  font-size: 1rem;
   background-color: rgb(255,110,126);
-  color: black;
-  width: 1.2rem;
+  color: white;
+  border-radius: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  max-width: 1.5rem;
+  cursor: pointer;
+  transition: all .8s .2s ease;
+  overflow-x: hidden;
+}
+
+.notification-badge:hover {
+  max-width: 50rem;
+  padding: 0 .5rem;
+}
+
+
+.notification-badge .badge-expand{
+  display:none;
+}
+
+
+.notification-badge:hover .badge-expand{
+  display:inline-block;
+}
+
+.badge-expand {
+  margin-left: .5rem;
+  white-space: nowrap;
+
 }
 
 .action-card > * {
