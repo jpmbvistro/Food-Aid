@@ -29,6 +29,10 @@
   height: 100%;
 }
 
+.balloons {
+  width: 70%;
+  margin: 0 auto;
+}
 
 .input-name {
   background-color: white;
@@ -43,7 +47,7 @@
 }
 
 .distance-button {
-  
+
 }
 
 .newUserForm input[type='checkbox']:checked + label {
