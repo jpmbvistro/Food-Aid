@@ -50,6 +50,14 @@
 
 }
 
+.process-slide {
+  justify-content: space-around;
+}
+
+.restart-onboard {
+  margin-top: 1rem;
+}
+
 .newUserForm input[type='checkbox']:checked + label {
   box-shadow: 0 0 1rem .5rem rgba(255,255,255,.3);
   background-color: rgb(128,223,181);
