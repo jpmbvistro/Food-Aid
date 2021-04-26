@@ -10,8 +10,8 @@
 
           <h2>Who's joining us?</h2>
 
-          <label for="input-name">Display Name</label>
-          <input class='form-input' id='inputName' type="text" name="name" placeholder='Coolest name goes here' value="">
+          <label for="input-name">This will be the name for all your posts</label>
+          <input class='form-input input-field input-name' id='inputName' type="text" name="name" placeholder='Coolest name goes here' value="">
 
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
 
@@ -20,21 +20,21 @@
           <h2>A+ Name</h2>
           <h3>What Kind of Food Are You Looking For?</h3>
           <p class='tip'>Choose as many as you want</p>
-          <div class="food-options grid-container">
-            <label class="food-option vegetable">
-              <img src="img/card/vegetables.png" alt="Pick Vegetables">
+          <div class="food-options grid-container grid-3w grid-gap">
+            <input id='inputVegetable' class='replace' type="checkbox" name="vegetable" value="true">
+            <label for='inputVegetable' class="food-option input-field">
               <h4>Vegetables</h4>
-              <input id='inputVegetable' class='replace' type="checkbox" name="vegetable" value="true">
+              <img src="img/card/vegetables.png" alt="Pick Vegetables">
             </label>
-            <label class="food-option fruit">
-              <img src="img/card/fruit.png" alt="Pick Fruit">
+            <input id='inputFruit' class='replace' type="checkbox" name="fruit" value="true">
+            <label for='inputFruit' class="food-option input-field">
               <h4>Fruits</h4>
-              <input id='inputFruit' class='replace' type="checkbox" name="fruit" value="true">
+              <img src="img/card/fruit.png" alt="Pick Fruit">
             </label>
-            <label class="food-option grain">
-              <img src="img/card/flour.png" alt="Pick Grain">
+            <input id='inputGrains' class='replace' type="checkbox" name="grain" value="true">
+            <label for='inputGrains' class="food-option input-field">
               <h4>Grains</h4>
-              <input id='inputGrains' class='replace' type="checkbox" name="grain" value="true">
+              <img src="img/card/flour.png" alt="Pick Grain">
             </label>
           </div>
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
@@ -43,20 +43,20 @@
         <div class="food-preference-slide flex-container flex-column flex-xy-center slide">
           <h2>Yummy!</h2>
           <h3>A few more details regarding the food</h3>
-          <p>Choose one or both</p>
-          <div class="food-options grid-container">
-            <label class="food-option garden">
-              <img src="img/card/plant.png" alt="Pick Garden Grown">
+          <p class='tip'>Choose one or both</p>
+          <div class="food-options grid-container grid-gap">
+            <input id='inputGarden' class='replace' type="checkbox" name="garden" value="true">
+            <label for='inputGarden' class="food-option input-field garden">
               <h4>Garden Grown</h4>
-              <p>Fellow Community Members Grew These!</p>
-              <input id='inputGarden' class='replace' type="checkbox" name="garden" value="true">
+              <img src="img/card/plant.png" alt="Pick Garden Grown">
             </label>
-            <label class="food-option prepacked">
-              <img src="img/card/packaging.png" alt="Pick Prepacked">
+            <p class='hide'>Fellow Community Members Grew These!</p>
+            <input id='inputPrepacked' class='replace' type="checkbox" name="prepacked" value="true">
+            <label for='inputPrepacked' class=" food-option input-field prepacked">
               <h4>Prepacked</h4>
-              <p>This food was packed by a company and donated by a community member!</p>
-              <input id='inputPrepacked' class='replace' type="checkbox" name="prepacked" value="true">
+              <img src="img/card/packaging.png" alt="Pick Prepacked">
             </label>
+            <p class='hide'>This food was packed by a company and donated by a community member!</p>
           </div>
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
@@ -64,21 +64,21 @@
         <div class="travel-slide slide flex-container flex-column flex-xy-center">
           <h2>One Last Thing</h2>
           <h3>If you are able to, please list how far you're able to travel</h3>
-          <p>This will help us determine if we need to find a volunteer to help</p>
-          <div class="food-options flex-container">
-            <div class="">
-              <button id='lowerDistance' class='increase-distance' type="button" name="button">-</button>
+          <p class='tip'>This will help us determine if we need to find a volunteer to help</p>
+          <div class="food-options flex-container flex-xy-center">
+            <div class="flex-container flex-xy-center">
+              <button id='lowerDistance' class='increase-distance distance-button' type="button" name="button">-</button>
             </div>
             <div class="flex-container flex-column flex-xy-center">
-              <input id='travel-setting-onboard' class='counter' type="number" name="distance" value="">
-              <label for="travel-setting-onboard">mi</label>
+              <input id='travel-setting-onboard' class='counter input-field input-name' type="number" name="distance" value="">
             </div>
-            <div class="">
-              <button id='increaseDistance' class='increase-distance' type="button" name="button">+</button>
+            <div class="flex-container flex-xy-center">
+              <button id='increaseDistance' class='increase-distance distance-button' type="button" name="button">+</button>
             </div>
           </div>
+          <label for="travel-setting-onboard">mi</label>
           <label for="inputAddress">Also your address</label>
-          <input id='inputAddress' type="text" name="address" value="">
+          <input id='inputAddress' class='input-field input-name' type="text" name="address" value="">
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
         </div>

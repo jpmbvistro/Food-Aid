@@ -14,9 +14,13 @@ async function initChat(){
     let bubble = await renderMessage(messagesPaginator.items[i])
   }
   //set last rendered message as updated
-  let rest = await conversation.advanceLastReadMessageIndex(messagesPaginator.items[messagesPaginator.items.length-1].index)
-  console.log('leftover');
-  console.log(rest);
+  if(messagesPaginator.items.length>0){
+    let rest = await conversation.advanceLastReadMessageIndex(messagesPaginator.items[messagesPaginator.items.length-1].index)
+    console.log('leftover');
+    console.log(rest);
+  }
+
+
   console.log(conversation.lastReadMessageIndex)
 
   //future iteration disable function call until previous completion

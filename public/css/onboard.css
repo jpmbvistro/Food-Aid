@@ -1,15 +1,54 @@
-form {
+.newUserForm {
   position: relative;
   overflow: hidden;
 }
 
-form, .slide {
+.newUserForm, .slide {
   height: 100%;
   width: 100%;
 }
 
-.food-options {
-  grid-template-columns: 1fr 1fr 1fr
+.newUserForm h4 {
+  font-size: 1rem;
+}
+
+.newUserForm .tip {
+  margin-bottom: 1rem;
+}
+
+.food-pick-slide .food-options {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.food-preference-slide .food-options {
+  grid-template-columns: 1fr 1fr;
+}
+
+.food-preference-slide .food-option {
+  width:100%;
+  height: 100%;
+}
+
+
+.input-name {
+  background-color: white;
+}
+
+.food-option {
+  text-align: center;
+}
+
+.newUserForm input[type='checkbox'] {
+  display: none;
+}
+
+.distance-button {
+  
+}
+
+.newUserForm input[type='checkbox']:checked + label {
+  box-shadow: 0 0 1rem .5rem rgba(255,255,255,.3);
+  background-color: rgb(128,223,181);
 }
 
 .slide {
@@ -31,12 +70,18 @@ form, .slide {
 
 .food-pick-slide {
   z-index: 4;
+  padding: .5rem;
 }
 
 .food-preference-slide {
   z-index: 3;
+  padding:.5rem;
 }
 
 .travel-slide {
   z-index: 2;
+}
+
+.next-slide-button {
+  margin: 1rem;
 }
