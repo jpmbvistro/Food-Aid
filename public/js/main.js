@@ -32,8 +32,9 @@ Array.from(document.querySelectorAll('.req-aid')).forEach(item=>{
 /*================================
 =====Complete Aid functionality===
 =================================*/
-Array.from(document.querySelectorAll('complete-exchange-button')).forEach((item,i) => {
+Array.from(document.querySelectorAll('.complete-exchange-button')).forEach((item,i) => {
   item.addEventListener('click', element=>{
+    console.log('requesting completion');
     let card = element.currentTarget.parentElement.parentElement
     fetch('complete', {
       method: 'put',

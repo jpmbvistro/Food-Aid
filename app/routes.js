@@ -1,5 +1,5 @@
 module.exports = function(
-  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars) {
+  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars, opencage) {
 
 
 /********************
@@ -194,6 +194,15 @@ module.exports = function(
     ==================================*/
     app.post('/newUser', async function(req, res) {
       try {
+        let cagedResponse = await opencage.geocode({
+          q: req.body.address,
+          language:'en',
+          countrycode: 'us',
+          limit: 1,
+          pretty: 1,
+          no_annotations: 1,
+        })
+        if(cagedResponse.results.length===0) throw "Really Bad Address"
         user = await client.conversations.users.create({
          identity: `${req.user._id}`,
         })
@@ -205,7 +214,8 @@ module.exports = function(
           wantsGrains: Boolean(req.body.wantsGrains),
           wantsGarden: Boolean(req.body.wantsGarden),
           wantsPrepacked: Boolean(req.body.wantsPrepacked),
-          address: req.body.address,
+          address: cagedResponse.results[0].formatted,
+          geoJSON: { type: "Point", coordinates: [cagedResponse.results[0].geometry.lng,cagedResponse.results[0].geometry.lat]},
           userDistance: Number(req.body.userDistance),
           twilioIdentitySID: user.sid
         })
@@ -324,21 +334,31 @@ module.exports = function(
       db.collection('foodAid').findOne({
         _id: ObjectId(req.body.aidID)
       }, (err, result) => {
+        console.log('Food Aid Found');
+        console.log(result);
+        console.log(req.user._id);
         if(err) return res.send(err)
         //If requesting user is relevant to the post and post has not been fully completed yet
-        if((result.status !== 'complete') && (result.authorID === req.user._id || result.requestorID === req.user._id)){
-
+        if((result.status !== 'complete') && (result.authorID+'' === req.user._id+"" || result.requestorID+'' === req.user._id+'')){
+          console.log('This User Is Relevant');
           let newCompleteObj = {}
-          if(result.authorID === req.user._id) {
+          if(result.authorID+'' === req.user._id+'') {
+            console.log('user is author');
+            console.log()
             newCompleteObj.posterComplete = result.complete.posterComplete === false
             newCompleteObj.requestorComplete = result.complete.requestorComplete
           }
-          if(result.requestorID === req.user._id) {
+          else if(result.requestorID+'' === req.user._id+'') {
+            console.log('user is requestor');
             newCompleteObj.posterComplete = result.complete.posterComplete
             newCompleteObj.requestorComplete = result.complete.requestorComplete === false
+          } else {
+            console.log('huh that odd');
           }
           let newStatus = newCompleteObj.posterComplete && newCompleteObj.requestorComplete ? 'complete' : result.status
-
+          console.log(newStatus);
+          console.log(JSON.stringify(newCompleteObj));
+          console.log('gettingFood');
           db.collection('foodAid').findOneAndUpdate({
             _id: ObjectId(req.body.aidID)
           }, {
@@ -352,6 +372,7 @@ module.exports = function(
             upsert:true
           }, (err2, result2) => {
             if(err2) return res.send(err2)
+
             res.send(result2)
           })
         }

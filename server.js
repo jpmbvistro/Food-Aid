@@ -21,6 +21,7 @@ var twilio = require('twilio')
 var tokenGeneratorModule = require('./app/token-generator.js')
 
 // var configDB = require('./config/database.js');
+const opencage = require('opencage-api-client')
 
 
 /****************
@@ -53,7 +54,7 @@ var db
 mongoose.connect(DB_URL, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars);
+  require('./app/routes.js')(app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars, opencage);
 });
 
 require('./config/passport')(passport); // pass passport for configuration
