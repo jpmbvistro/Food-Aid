@@ -2,21 +2,27 @@
 <html lang="en" dir="ltr">
   <%- include('./partials/head.ejs') %>
   <body>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="crossorigin=""/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@1.4.1/dist/css/L.Control.OpenCageData.Search.min.css" />
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@1.4.1/dist/js/L.Control.OpenCageSearch.min.js"></script>
     <link rel="stylesheet" href="/css/onboard.css">
+
     <section class='main'>
       <form class="newUserForm" action="" method="">
-        <div class="opening-slide flex-container flex-column flex-xy-center slide">
+        <div class="opening-slide flex-container flex-column flex-xy-center slide slide-0">
           <h1>Let's get you Setup</h1>
 
           <h2>Who's joining us?</h2>
 
-          <label for="input-name">This will be the name for all your posts</label>
+          <label class='tip' for="input-name">This will be the name for all your posts</label>
           <input class='form-input input-field input-name' id='inputName' type="text" name="name" placeholder='Coolest name goes here' value="">
 
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
 
         </div>
-        <div class="food-pick-slide flex-container flex-column flex-xy-center slide">
+        <div class="food-pick-slide flex-container flex-column flex-xy-center slide slide-1">
           <h2>A+ Name</h2>
           <h3>What Kind of Food Are You Looking For?</h3>
           <p class='tip'>Choose as many as you want</p>
@@ -39,8 +45,9 @@
           </div>
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
+          <a data-prev-slide='0' class='back-link'></a>
         </div>
-        <div class="food-preference-slide flex-container flex-column flex-xy-center slide">
+        <div class="food-preference-slide flex-container flex-column flex-xy-center slide slide-2">
           <h2>Yummy!</h2>
           <h3>A few more details regarding the food</h3>
           <p class='tip'>Choose one or both</p>
@@ -60,11 +67,15 @@
           </div>
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
+          <a data-prev-slide='1' class='back-link'></a>
         </div>
-        <div class="travel-slide slide flex-container flex-column flex-xy-center">
+        <div class="travel-slide slide flex-container flex-column flex-xy-center slide-3">
           <h2>One Last Thing</h2>
           <h3>If you are able to, please list how far you're able to travel</h3>
           <p class='tip'>This will help us determine if we need to find a volunteer to help</p>
+          <div id='map' class="">
+
+          </div>
           <div class="food-options flex-container flex-xy-center">
             <div class="flex-container flex-xy-center">
               <button id='lowerDistance' class='increase-distance distance-button' type="button" name="button">-</button>
@@ -81,8 +92,9 @@
           <input id='inputAddress' class='input-field input-name' type="text" name="address" value="">
           <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
           <a class='restart-onboard' href="/onboard">Restart</a>
+          <a data-prev-slide='2' class='back-link'></a>
         </div>
-        <div class="process-slide slide flex-container flex-column flex-xy-center">
+        <div class="process-slide slide flex-container flex-column flex-xy-center slide-4">
           <div class="">
             <h2>Well Done!</h2>
             <h3>You're all set to get started</h3>
@@ -92,9 +104,12 @@
             <button id='onboardSubmit' class='primary-button' type="button" name="button">Let's Go!</button>
             <a class='restart-onboard' href="/onboard">Restart</a>
           </div>
+          <a data-prev-slide='3' class='back-link'></a>
         </div>
       </form>
     </section>
     <script type="text/javascript" src='js/onboard.js'></script>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+
   </body>
 </html>

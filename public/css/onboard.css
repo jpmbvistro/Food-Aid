@@ -97,3 +97,9 @@
 .next-slide-button {
   margin: 1rem;
 }
+
+#map {
+  height: 300px;
+  width: 100%;
+  z-index:
+}

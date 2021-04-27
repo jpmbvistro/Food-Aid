@@ -76,3 +76,11 @@ async function initChat(){
   }
 
 }
+
+/*================================
+===========Nav Back to Dash=======
+=================================*/
+document.querySelector('#back-button').addEventListener('click', element=> {
+  console.log("GO BACK");
+  history.back()
+})

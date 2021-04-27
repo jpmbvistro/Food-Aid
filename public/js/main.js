@@ -59,13 +59,7 @@ Array.from(document.querySelectorAll('.complete-exchange-button')).forEach((item
   })
 })
 
-/*================================
-===========Nav Back to Dash=======
-=================================*/
-document.querySelector('#back-button').addEventListener('click', element=> {
-  console.log("GO BACK");
-  history.back()
-})
+
 
 
 

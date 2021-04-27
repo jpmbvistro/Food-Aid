@@ -709,6 +709,42 @@ li + li{
 ==========Custom Components=========
 ************************************/
 
+a {
+  cursor: pointer;
+}
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1rem;
+/*   background-color:white; */
+  width:1.5rem;
+  height:1.5rem;
+}
+
+.back-link::before,
+.back-link::after{
+  content: ' ';
+  position: absolute;
+  top:50%;
+  left:.75rem;
+  height: 1px;
+  width: 1rem;
+  background-color: rgb(41,41,41);
+
+}
+
+.back-link::before{
+  transform-origin: top left;
+  transform: translate(-50%, -50%) rotate(45deg);
+
+}
+
+.back-link::after{
+  transform-origin: bottom left;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .suggested-aid{
   overflow-x: scroll;
   padding: 1rem 0;
