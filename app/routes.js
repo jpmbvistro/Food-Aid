@@ -194,8 +194,14 @@ module.exports = function(
     ==================================*/
     app.post('/newUser', async function(req, res) {
       try {
-        if(req.body.address !== null && req.body.latlng === null){
-          let latlng = await opencage.geocode({
+        let address = null
+        let latlng = null
+        console.log(typeof req.body.address);
+        console.log(req.body.address==='');
+        console.log(req.body.latlng);
+        console.log(req.body.latlng !== null)
+        if(req.body.address && req.body.latlng === null){
+          latlng = await opencage.geocode({
             q: req.body.address,
             language:'en',
             countrycode: 'us',
@@ -204,8 +210,8 @@ module.exports = function(
             no_annotations: 1,
           })
           if(latlng.results.length===0) throw "Coult Not Find LatLng from Address"
-        } else if(req.body.address === null && req.body.latlng !== null){
-          let address = await opencage.geocode({
+        } else if((req.body.address === null && req.body.latlng !== null) || (req.body.address === '' && req.body.latlng !== null) ){
+          address = await opencage.geocode({
             q: `${req.body.latlng.lat}, ${req.body.latlng.lng}`,
             language:'en',
             countrycode: 'us',
@@ -219,8 +225,8 @@ module.exports = function(
         } else {
           console.log('Nice, you sent both Address and LatLng')
         }
-        let geoAddress = req.body.address || address.results[0].formatted
-        let geoCenter = req.body.latlng !== null ? [req.body.latlng.lng,req.body.latlng.lat] : [latlng.results[0].geometry.lng , latlng.results[0].geometry.lat]
+        let geoAddress = req.body.address ? req.body.address: address.results[0].formatted
+        let geoCenter = req.body.latlng ? [req.body.latlng.lng,req.body.latlng.lat] : [latlng.results[0].geometry.lng , latlng.results[0].geometry.lat]
         let geoRadius = Number(req.body.userDistance)
         let geoOptions = {
           units:'miles',
