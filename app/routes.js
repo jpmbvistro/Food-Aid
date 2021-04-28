@@ -252,7 +252,7 @@ module.exports = function(
           wantsGarden: Boolean(req.body.wantsGarden),
           wantsPrepacked: Boolean(req.body.wantsPrepacked),
           address: geoAddress,
-          geoJSON: geoCircle,
+          geoJSON: geoCircle.geometry,
           userDistance: Number(req.body.userDistance),
           twilioIdentitySID: user.sid
         })
