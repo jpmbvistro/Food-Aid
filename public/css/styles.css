@@ -24,6 +24,22 @@
 ===Base Styles====
 *******************/
 
+:root {
+  --peach-color : rgb(232,177,168);
+  --leaf-color : rgb(180,218,192);
+  --carot-color : rgb(255,168,117);
+  --apple-color: rgb(237,161,171);
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Source Sans Pro', sans-serif;
+  /* background-color: #9869ff; */
+  /* background-color: rgb(60, 70, 87); */
+  background-color: rgb(160, 182, 219);
+  color: rgb(41,41,41);
+}
+
 button {
   cursor: pointer;
 }
@@ -63,14 +79,7 @@ h4 {
   margin-bottom: .25rem;
 }
 
-html {
-  font-size: 16px;
-  font-family: 'Source Sans Pro', sans-serif;
-  /* background-color: #9869ff; */
-  /* background-color: rgb(60, 70, 87); */
-  background-color: rgb(160, 182, 219);
-  color: rgb(41,41,41);
-}
+
 
 .author {
   font-style: italic;

@@ -123,6 +123,15 @@ module.exports = function(
           if(result.wantsPrepacked)foodSourcePreferences.push({'source':'prepacked'})
 
           if(foodSourcePreferences.length>0) searchFilter.$and.push({$or: foodSourcePreferences})
+
+          //Include geoJSON Intersection
+          searchFilter.$and.push({'geoJSON':{
+            $geoIntersects : {
+              $geometry: result.geoJSON
+            }
+          }})
+
+
           console.log(JSON.stringify(searchFilter))
 
 
@@ -196,10 +205,6 @@ module.exports = function(
       try {
         let address = null
         let latlng = null
-        console.log(typeof req.body.address);
-        console.log(req.body.address==='');
-        console.log(req.body.latlng);
-        console.log(req.body.latlng !== null)
         if(req.body.address && req.body.latlng === null){
           latlng = await opencage.geocode({
             q: req.body.address,
@@ -229,15 +234,13 @@ module.exports = function(
         let geoCenter = req.body.latlng ? [req.body.latlng.lng,req.body.latlng.lat] : [latlng.results[0].geometry.lng , latlng.results[0].geometry.lat]
         let geoRadius = Number(req.body.userDistance)
         let geoOptions = {
+          steps: 8,
           units:'miles',
           properties:{
             address: geoAddress,
             center: {lat: geoCenter[1], lng: geoCenter[0]}
           }
         }
-        // console.log(turfCircle);
-        // console.log(JSON.stringify(turfCircle))
-        // console.log(turfCircle.default)
         let geoCircle = turfCircle(geoCenter, geoRadius, geoOptions)
         console.log(geoCircle)
         user = await client.conversations.users.create({
@@ -283,7 +286,7 @@ module.exports = function(
           foodType: req.body.foodType,
           source: req.body.source,
           expiration: req.body.expiration,
-          location: result.address,
+          geoJSON: result.geoJSON,
           status: 'available',
           requestorName: '',
           requestorID: null,
@@ -309,7 +312,6 @@ module.exports = function(
         let userSettings = await db.collection('userSettings').findOne({
           userID: ObjectId(req.user._id)
         })
-
         console.log('Creating Conversation...')
         let conversation = await client.conversations.conversations.create()
         console.log('Conversation Completed')
@@ -337,11 +339,9 @@ module.exports = function(
           identity: `${req.user._id}`,
           friendlyName: userSettings.displayName
         })
-
         let authorSettings = await db.collection('userSettings').findOne({
           userID: ogFoodResult.value.authorID
         })
-
         await client.conversations.conversations(conversation.sid).participants.create({
           identity: `${ogFoodResult.value.authorID}`,
           friendlyName: authorSettings.displayName
@@ -350,8 +350,6 @@ module.exports = function(
           message: 'Request Complete, Ready to Chat',
           originalFoodAid: ogFoodResult
         })
-
-
       } catch(err2) {
         console.log('Error!')
         console.log(err2)
@@ -366,7 +364,7 @@ module.exports = function(
     /*=======================================
     ==========Complete Posted Food Aid========
     ========================================*/
-    app.put('/complete', function(req, res) {
+    app.put('/complete', isLoggedIn, function(req, res) {
       console.log("Complete REquest!")
       db.collection('foodAid').findOne({
         _id: ObjectId(req.body.aidID)
@@ -427,7 +425,7 @@ module.exports = function(
           { $and : [
             { requestorID : ObjectId(req.user._id) },
             { status : 'pending' },
-          ]}
+          ]},
         ]}))
         console.log('done updating');
         res.status(201).send(JSON.stringify({
@@ -439,8 +437,6 @@ module.exports = function(
           message: 'Error updating user tasks'
         })
       }
-
-
     })
 
 
@@ -449,13 +445,6 @@ module.exports = function(
     // =============================================================================
     app.get('/token', isLoggedIn, async (req, res) => {
       console.log('getting a token')
-      // const identity = request.params.identity;
-      // const accessToken = new twilio.jwt.AccessToken(config.twilio.accountSid, config.twilio.apiKey, config.twilio.apiSecret);
-      // const chatGrant = new twilio.jwt.AccessToken.ChatGrant({
-      //   serviceSid: config.twilio.chatServiceSid,
-      // });
-      // accessToken.addGrant(chatGrant);
-      // accessToken.identity = identity;
       let {token, identity} = await tokenGenerator.tokenGenerate(req.user._id)
       res.set('Content-Type', 'application/json');
       res.send(JSON.stringify({
@@ -463,9 +452,6 @@ module.exports = function(
         identity: identity
       }));
     })
-
-
-
 
 
     // =============================================================================

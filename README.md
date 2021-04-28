@@ -109,3 +109,5 @@ Ooops push notification is not for figuring out unread messages.
 testing during refactoring!
 
 Read horizon-not explicitly on documentation
+
+Add GeoJSON to food Aid
