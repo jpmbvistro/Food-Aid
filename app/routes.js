@@ -1,5 +1,5 @@
 module.exports = function(
-  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars, opencage) {
+  app, db, passport, uniqid, ObjectId, client, tokenGenerator, twilioVars, opencage, turfCircle) {
 
 
 /********************
@@ -194,15 +194,42 @@ module.exports = function(
     ==================================*/
     app.post('/newUser', async function(req, res) {
       try {
-        let cagedResponse = await opencage.geocode({
-          q: req.body.address,
-          language:'en',
-          countrycode: 'us',
-          limit: 1,
-          pretty: 1,
-          no_annotations: 1,
-        })
-        if(cagedResponse.results.length===0) throw "Really Bad Address"
+        if(req.body.address !== null && req.body.latlng === null){
+          let latlng = await opencage.geocode({
+            q: req.body.address,
+            language:'en',
+            countrycode: 'us',
+            limit: 1,
+            pretty: 1,
+            no_annotations: 1,
+          })
+          if(latlng.results.length===0) throw "Coult Not Find LatLng from Address"
+        } else if(req.body.address === null && req.body.latlng !== null){
+          let address = await opencage.geocode({
+            q: `${req.body.latlng.lat}, ${req.body.latlng.lng}`,
+            language:'en',
+            countrycode: 'us',
+            limit: 1,
+            pretty: 1,
+            no_annotations: 1,
+          })
+          if(address.results.length===0) throw "Could Not Find Address From LatLng"
+        } else if (req.body.address === null && req.body.latlng === null){
+          throw "No Address or LatLng Sent"
+        } else {
+          console.log('Nice, you sent both Address and LatLng')
+        }
+        let geoAddress = req.body.address || address.results[0].formatted
+        let geoCenter = req.body.latlng !== null ? [req.body.latlng.lng,req.body.latlng.lat] : [latlng.results[0].geometry.lng , latlng.results[0].geometry.lat]
+        let geoRadius = Number(req.body.userDistance)
+        let geoOptions = {
+          units:'miles',
+          properties:{
+            address: geoAddress
+          }
+        }
+        let geoCircle = turfCircle.circle(geoCenter, geoRadius, geoOptions)
+
         user = await client.conversations.users.create({
          identity: `${req.user._id}`,
         })
@@ -215,7 +242,7 @@ module.exports = function(
           wantsGarden: Boolean(req.body.wantsGarden),
           wantsPrepacked: Boolean(req.body.wantsPrepacked),
           address: cagedResponse.results[0].formatted,
-          geoJSON: { type: "Point", coordinates: [cagedResponse.results[0].geometry.lng,cagedResponse.results[0].geometry.lat]},
+          geoJSON: geoCircle,
           userDistance: Number(req.body.userDistance),
           twilioIdentitySID: user.sid
         })

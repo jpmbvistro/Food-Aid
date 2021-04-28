@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/onboard.css">
 
     <section class='main'>
-      <form class="newUserForm" action="" method="">
+      <div class="newUserForm" action="" method="">
         <div class="opening-slide flex-container flex-column flex-xy-center slide slide-0">
           <h1>Let's get you Setup</h1>
 
@@ -69,30 +69,33 @@
           <a class='restart-onboard' href="/onboard">Restart</a>
           <a data-prev-slide='1' class='back-link'></a>
         </div>
+
+
         <div class="travel-slide slide flex-container flex-column flex-xy-center slide-3">
-          <h2>One Last Thing</h2>
-          <h3>If you are able to, please list how far you're able to travel</h3>
-          <p class='tip'>This will help us determine if we need to find a volunteer to help</p>
+          <div class="prompt flash-message-container">
+            <div class="flash-message-card">
+              <h2>One Last Thing</h2>
+              <h3>If you are able to, please list how far you're able to travel</h3>
+              <p class='tip'>This will help us determine if we need to find a volunteer to help</p>
+              <button class='close-flash' name="button">close</button>
+              <a class='restart-onboard' href="/onboard">Restart</a>
+            </div>
+          </div>
           <div id='map' class="">
 
           </div>
-          <div class="food-options flex-container flex-xy-center">
-            <div class="flex-container flex-xy-center">
-              <button id='lowerDistance' class='increase-distance distance-button' type="button" name="button">-</button>
-            </div>
-            <div class="flex-container flex-column flex-xy-center">
-              <input id='travel-setting-onboard' class='counter input-field input-name' type="number" name="distance" value="">
-            </div>
-            <div class="flex-container flex-xy-center">
-              <button id='increaseDistance' class='increase-distance distance-button' type="button" name="button">+</button>
-            </div>
+          <div class="map-onboard-control flex-container flex-xy-center">
+            <a data-prev-slide='2' class='back-link map-back-link float-control'></a>
+            <label class='float-control-container flex-container flex-xy-center'  for="travel-radius">
+              <input id='travel-radius' class='travel-radius' type="range" name="radius" value="" min='0' step='.125' max='10'>
+            </label>
+
+            <button class='next-slide-button float-control' type="button" name="button">Continue</button>
           </div>
-          <label for="travel-setting-onboard">mi</label>
-          <label for="inputAddress">Also your address</label>
-          <input id='inputAddress' class='input-field input-name' type="text" name="address" value="">
-          <button class='primary-button next-slide-button' type="button" name="button">Continue</button>
-          <a class='restart-onboard' href="/onboard">Restart</a>
-          <a data-prev-slide='2' class='back-link'></a>
+
+
+
+
         </div>
         <div class="process-slide slide flex-container flex-column flex-xy-center slide-4">
           <div class="">
@@ -106,7 +109,7 @@
           </div>
           <a data-prev-slide='3' class='back-link'></a>
         </div>
-      </form>
+      </div>
     </section>
     <script type="text/javascript" src='js/onboard.js'></script>
     <!-- Make sure you put this AFTER Leaflet's CSS -->
