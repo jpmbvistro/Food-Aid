@@ -10,6 +10,12 @@ Array.from(document.querySelectorAll('.next-slide-button')).forEach( (item, i) =
   })
 })
 
+document.querySelector('#map-next-button').addEventListener('click',element=>{
+  let slide = element.currentTarget.parentElement.parentElement
+  slide.classList.add('animate')
+})
+
+
 Array.from(document.querySelectorAll('.back-link')).forEach( (item,i) => {
   item.addEventListener('click', element => {
     document.querySelector(`.slide-${element.currentTarget.getAttribute('data-prev-slide')}`).classList.remove('animate')
@@ -36,7 +42,7 @@ document.querySelector('#onboardSubmit').addEventListener('click', element => {
       'wantsPrepacked': form.querySelector("#inputPrepacked").value,
       'address': form.querySelector('.leaflet-control-ocd-search-form input').value,
       'userDistance': form.querySelector("#travel-radius").value,
-      'latlng' : {lat:map.getLatLng().lat, lng:map.getLatLng().lng}
+      'latlng' : {lat:map.getCenter().lat, lng:map.getCenter().lng}
     })
   })
   .then(response => {

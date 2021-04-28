@@ -23,8 +23,12 @@ var tokenGeneratorModule = require('./app/token-generator.js')
 // var configDB = require('./config/database.js');
 const opencage = require('opencage-api-client')
 
-var turfCircle = require('@turf/circle')
-
+var turfCircle = require('@turf/circle').default
+// console.log(turfCircle);
+// console.log(JSON.stringify(turfCircle))
+// console.log(turfCircle.default.circle)
+// console.log(typeof turfCircle.default)
+// console.log(turf([2.44,-2.11],4))
 /****************
 GLOBAL VARIABLES
 *****************/

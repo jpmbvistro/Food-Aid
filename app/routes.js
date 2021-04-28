@@ -225,11 +225,15 @@ module.exports = function(
         let geoOptions = {
           units:'miles',
           properties:{
-            address: geoAddress
+            address: geoAddress,
+            center: {lat: geoCenter[1], lng: geoCenter[0]}
           }
         }
-        let geoCircle = turfCircle.circle(geoCenter, geoRadius, geoOptions)
-
+        // console.log(turfCircle);
+        // console.log(JSON.stringify(turfCircle))
+        // console.log(turfCircle.default)
+        let geoCircle = turfCircle(geoCenter, geoRadius, geoOptions)
+        console.log(geoCircle)
         user = await client.conversations.users.create({
          identity: `${req.user._id}`,
         })
@@ -241,7 +245,7 @@ module.exports = function(
           wantsGrains: Boolean(req.body.wantsGrains),
           wantsGarden: Boolean(req.body.wantsGarden),
           wantsPrepacked: Boolean(req.body.wantsPrepacked),
-          address: cagedResponse.results[0].formatted,
+          address: geoAddress,
           geoJSON: geoCircle,
           userDistance: Number(req.body.userDistance),
           twilioIdentitySID: user.sid
