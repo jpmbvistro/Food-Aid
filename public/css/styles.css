@@ -404,7 +404,7 @@ Custom Layout Below
   position: relative;
   width: clamp(10rem, 100vw, 30rem);
 
-  height: clamp(10rem, 100vh, 40rem);
+  height: clamp(10rem, 95vh, 40rem);
 
 
 }
