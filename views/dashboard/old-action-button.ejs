@@ -1,0 +1,15 @@
+<a href='/chat/<%= actions[i]._id %>' class="chat-action action-card-icon flex-container flex-xy-center <% if(actions[i].twilioConversationsSID === null) {%> hide <% } %>">
+  <div class='hide notifications notification-badge flex-container flex-xy-center'>
+    <span class='badge-main'></span><span class='badge-expand'></span>
+  </div>
+  <img src="img/card/chat.png" alt="message <%=actions[i].authorName%>">
+</a>
+
+<div class="action-buttons flex-container">
+  <button class='complete-exchange-button' type="button" name="button">
+    <img class='configure-icon' src="img/card/checked.png" alt="Complete Button">
+  </button>
+  <button class='exchange-details-button' type="button" name="button">
+    <img class='configure-icon' src="img/card/sliders.png" alt="Focus Button">
+  </button>
+</div>

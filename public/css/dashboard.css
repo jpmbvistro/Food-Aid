@@ -1,8 +1,49 @@
 .in-progress{
-  padding-bottom: 8rem;
+  padding-bottom: 20rem;
 }
 
 .suggested-aid-list {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.action-status-icon-button {
+  background: var(--apple-color);
+  border-radius: 50%;
+  border: 2px solid rgba(41,41,41,.2);
+  min-height: 3rem;
+  min-width: 3rem;
+}
+
+.status-container {
+  flex: 0 0 3rem;
+  margin: 0 1rem;
+}
+
+.action-card {
+  box-shadow: 0 0 1rem -.5rem rgba(41,41,41,.4);
+  cursor: pointer;
+}
+
+.expiration-container {
+  /* border-top: 1px solid rgba(41,41,41,.4); */
+}
+
+.more-info-button {
+  flex: 0 0 1rem;
+  margin: 0 1rem;
+}
+
+.focus-card .button-container button{
+  background-color: var(--apple-color);
+  border: 2px solid rgba(41,41,41,.4);
+  border-radius: 1rem;
+}
+
+#focus-description {
+  white-space: normal;
+}
+
+.focus-footer{
+  margin-top: 2rem;
 }

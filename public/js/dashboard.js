@@ -85,11 +85,12 @@ Array.from(document.querySelectorAll('.can-focus')).forEach(item=> {
     focusAction.setAttribute('data-twilioConversationsSID', sourceCard.querySelector("input[name='aid-twilioConversationsSID']").value)
 
     //ReSet Button Action
+    focusAction.disabled=false
     focusAction.removeEventListener('click', reqAid)
     focusAction.removeEventListener('click', chat)
     //Remove Complete Button if existant
     let completeButton = focusCard.querySelector('#focus-complete')
-    if(completeButton) completeButton.remove
+    if(completeButton) completeButton.remove()
 
     let cardType = sourceCard.getAttribute('data-card-type')
     if(cardType==='available'){
@@ -98,12 +99,19 @@ Array.from(document.querySelectorAll('.can-focus')).forEach(item=> {
     } else if (cardType==='current'){
       focusAction.innerText = 'Chat'
       focusAction.addEventListener('click', chat)
+      console.log('SID Length');
+      console.log(focusAction.getAttribute('data-twilioConversationsSID').length);
+      if(focusAction.getAttribute('data-twilioConversationsSID').length!==0){
+        console.log('Length was 0');
+        let newButton = document.createElement('button')
+        newButton.id = 'focus-complete'
+        newButton.addEventListener('click',complete)
+        newButton.innerText = 'Complete'
+        focusCard.querySelector('.button-container').appendChild(newButton)
+      } else{
+        focusAction.disabled=true
+      }
 
-      let newButton = document.createElement('button')
-      newButton.id = 'focus-complete'
-      newButton.addEventListener('click',complete)
-      newButton.innerText = 'Complete'
-      focusCard.querySelector('.button-container').appendChild(newButton)
     }
   })
 })
@@ -149,9 +157,36 @@ async function chat(element){
 }
 
 async function complete(element){
+  try {
+    console.log('requesting completion');
+    let card = element.currentTarget.parentElement.parentElement
+    let response = await fetch('complete', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        aidID: focusId.value,
+      }),
+    })
+    let data = ''
+    if (response.ok) {
+      data= await response.json()
+    }
+    submitAidAnimation('success')
+    console.log(data)
+    window.location.reload(true)
+  } catch (e) {
+    console.log('Error Requesting Completion');
+    console.log(e);
+  }
+
+
 
 }
 
 document.querySelector('#close-focus-button').addEventListener('click',_=>{
+  focusCardContainer.classList.add('hide')
+})
+
+document.querySelector('#focus-card-container').addEventListener('click',_=>{
   focusCardContainer.classList.add('hide')
 })

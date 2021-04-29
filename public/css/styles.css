@@ -78,7 +78,7 @@ h3 {
 
 h4 {
   font-size: 1.3rem;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   margin-bottom: .5rem;
 }
 
@@ -798,18 +798,21 @@ a {
 }
 
 .close-focus-button{
-  min-height: 1.5rem;
-  min-width: 1.5rem;
+  min-height: 2rem;
+  min-width: 2rem;
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
   border:none;
   background: none;
+  padding:0;
+  cursor: pointer;
 }
 
 .close-focus-button::before,
 .close-focus-button::after {
   width: 1.5rem;
+  left:.5rem;
 }
 
 .close-focus-button::before {

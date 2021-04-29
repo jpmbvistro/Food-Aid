@@ -12,9 +12,10 @@ document.querySelector('#submit-new-aid').addEventListener('click', element => {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       title: form.querySelector("input[name='title']").value,
-      foodType: Array.from(form.querySelectorAll("input[name='foodType']")).filter(item=>item.checked)[0].value,
-      source: form.querySelector("input[name='is-garden-grown']").checked ? 'garden' : 'prepacked',
-      expiration: form.querySelector("input[name='expiration']").value
+      foodType: form.querySelector("input[name='foodType']:checked").value,
+      source: form.querySelector("input[name='source']:checked").value,
+      expiration: form.querySelector("input[name='expiration']").value,
+      description: form.querySelector('#description-input').value
     }),
   })
   .then(response => {

@@ -35,7 +35,7 @@ module.exports = function(
     })
 
     app.post('/chat', isLoggedIn, async function(req,res){
-      
+
     })
 
     app.get('/chat/:aidID', isLoggedIn, async (req, res) => {
@@ -295,6 +295,7 @@ module.exports = function(
           foodType: req.body.foodType,
           source: req.body.source,
           expiration: req.body.expiration,
+          description: req.body.description,
           geoJSON: result.geoJSON,
           status: 'available',
           requestorName: '',

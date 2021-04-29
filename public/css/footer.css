@@ -4,7 +4,7 @@ footer {
   bottom: 0;
   /* left: 0; */
   width: 100%;
-  min-height: 8.2rem;
+  min-height: 3.2rem;
   /* background-color: rgba(237, 171, 171,1); */
   /* overflow: hidden; */
   z-index: 20;
@@ -50,7 +50,8 @@ footer .new-contribution {
 footer.expand .new-contribution {
   height: 100%;
   transform: translateY(0);
-  padding-bottom: 5rem;
+  /* padding-bottom: 5rem; */
+  overflow: scroll;
 }
 
 footer h4 {
@@ -230,4 +231,8 @@ footer .food-type {
 footer input[type='radio'] + label,
 input[type='date']{
   cursor: pointer;
+}
+
+#description-input {
+  width: 100%;
 }
