@@ -34,6 +34,10 @@ module.exports = function(
       })
     })
 
+    app.post('/chat', isLoggedIn, async function(req,res){
+      
+    })
+
     app.get('/chat/:aidID', isLoggedIn, async (req, res) => {
       try {
         console.log('loading Chat')
@@ -59,6 +63,7 @@ module.exports = function(
         }
         //FUTURE: can validate that req.user is part of the conversation
         if(req.params.aidID && response.twilioConversationsSID){
+          console.log('Success!');
           res.render('chat.ejs', {
             conversationsSid: response.twilioConversationsSID,
             title: 'Chat',

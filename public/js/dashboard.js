@@ -103,6 +103,7 @@ Array.from(document.querySelectorAll('.can-focus')).forEach(item=> {
       newButton.id = 'focus-complete'
       newButton.addEventListener('click',complete)
       newButton.innerText = 'Complete'
+      focusCard.querySelector('.button-container').appendChild(newButton)
     }
   })
 })
@@ -135,14 +136,20 @@ async function reqAid(element){
 
 async function chat(element){
   try {
-    let response = await fetch(`/chat/${focusId.value}`, {
-      method: 'get',
-      // headers: {'Content-Type': 'application/json'},
-    })
+    console.log('Getting Chat');
+    // let response = await fetch(`/chat/${focusId.value}`, {
+    //   method: 'get',
+    //   // headers: {'Content-Type': 'application/json'},
+    // })
+    window.location.href = `/chat/${focusId.value}`
   } catch (e) {
     console.log('Error Grabbing Chat');
     console.log(e);
   }
+}
+
+async function complete(element){
+
 }
 
 document.querySelector('#close-focus-button').addEventListener('click',_=>{

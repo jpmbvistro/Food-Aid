@@ -103,6 +103,16 @@
                     <img class='configure-icon' src="img/card/sliders.png" alt="Focus Button">
                   </button>
                 </div>
+                <input type="hidden" name="aid-id" value="<%= actions[i]._id %>">
+                <input type="hidden" name="aid-title" value="<%= actions[i].title %>">
+                <input type="hidden" name="aid-expiration" value="<%= actions[i].expiration %>">
+                <input type="hidden" name="aid-source" value="<%= actions[i].source %>">
+                <input type="hidden" name="aid-authorName" value="<%= actions[i].authorName %>">
+                <input type="hidden" name="aid-requestorName" value="<%= actions[i].requestorName %>">
+                <input type="hidden" name="aid-foodType" value="<%= actions[i].foodType %>">
+                <input type="hidden" name="aid-status" value="<%= actions[i].status %>">
+                <input type="hidden" name="aid-twilioConversationsSID" value="<%= actions[i].twilioConversationsSID %>">
+                <input type="hidden" name="aid-description" value="<%= actions[i].description %>">
               </div>
             </li>
 
