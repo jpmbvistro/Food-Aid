@@ -4,7 +4,9 @@ Assisting in the organization of food mutual aid projects.
 
 ## Screenshots
 
-![Login Screenshot](screenshot/login.png) ![Dashboard Screenshot](screenshot/dashboard.png)
+![Login Screenshot](screenshot/login.png) ![Dashboard Screenshot](screenshot/screenshot1.png)
+
+![Submission Screenshot](screenshot/screenshot2.png) ![Chat Screenshot](screenshot/screenshot3.png)
 
 
 
@@ -111,3 +113,6 @@ testing during refactoring!
 Read horizon-not explicitly on documentation
 
 Add GeoJSON to food Aid
+
+
+UI updates
