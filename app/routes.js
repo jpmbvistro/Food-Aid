@@ -242,6 +242,10 @@ module.exports = function(
           }
         }
         let geoCircle = turfCircle(geoCenter, geoRadius, geoOptions)
+        geoCircle = geoCircle.geometry
+
+        // geoCircle.coordinates = geoCircle.coordinates[0]
+
         console.log(geoCircle)
         user = await client.conversations.users.create({
          identity: `${req.user._id}`,
@@ -255,7 +259,7 @@ module.exports = function(
           wantsGarden: Boolean(req.body.wantsGarden),
           wantsPrepacked: Boolean(req.body.wantsPrepacked),
           address: geoAddress,
-          geoJSON: geoCircle.geometry,
+          geoJSON: geoCircle,
           userDistance: Number(req.body.userDistance),
           twilioIdentitySID: user.sid
         })

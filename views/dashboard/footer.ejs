@@ -3,45 +3,48 @@
 
   <section class='new-contribution'>
     <h4>Contribute to the Project</h4>
-    <form class="contribution-form flex-container flex-column" action="" method=''>
+    <form class="contribution-form" action="" method=''>
       <div class="text-field-container">
         <label class='text-field-header' for="aid-submit-title">What are you contributing?</label>
         <input class='text-field input-field' id='aid-submit-title' type="text" name="title" placeholder='Bok Choy, Steel Cut Oats, etc...' value="">
       </div>
       <div class="food-type-selection">
-        <h5>Food Type</h5>
+        <h5 class='text-field-header'>Food Type</h5>
         <div class="flex-container type-selector">
-
-          <label class='input-field' for="">
-            <input type="radio" name="foodType" value="fruit">
+          <input id='inputFruit' type="radio" name="foodType" value="fruit">
+          <label for='inputFruit' class='input-field food-type food-type-1' for="">
             Fruit
           </label>
-
-
-          <label class='input-field' for="">
-            <input type="radio" name="foodType" value="vegetable">
+          <input id='inputVegetable' type="radio" name="foodType" value="vegetable">
+          <label for='inputVegetable' class='input-field food-type food-type-2' for="">
             Vegetable
           </label>
-
-
-          <label class='input-field' for="">
-            <input type="radio" name="foodType" value="grain">
+          <input id='inputGrain' type="radio" name="foodType" value="grain">
+          <label for='inputGrain' class='input-field food-type food-type-3' for="">
             Grain
           </label>
         </div>
       </div>
-      <div class="aid-origin-container">
-        <div class="aid-origin">
-          <label for="is-garden-grown">
+      <div class="food-source-selection">
+        <h5 class='text-field-header'>Food Source</h5>
+        <div class="food-options grid-container grid-gap">
+          <input id='inputGarden' class='replace' type="radio" name="source" value="garden">
+          <label for='inputGarden' class="food-option input-field garden">
             <span>Garden Grown</span>
           </label>
+          <p class='hide'>Fellow Community Members Grew These!</p>
+          <input id='inputPrepacked' class='replace' type="radio" name="source" value="prepacked">
+          <label for='inputPrepacked' class=" food-option input-field prepacked">
+            <span>Prepacked</span>
+          </label>
+          <p class='hide'>This food was packed by a company and donated by a community member!</p>
         </div>
-        <input class='toggle-switch-checkbox' id='is-garden-grown' type="checkbox" name="is-garden-grown" value="">
-        <label class='toggle-switch-label' for="is-garden-grown"></label>
       </div>
       <div class="expiration-container">
-        <label for="expiration-date-input">Expiration</label>
-        <input class='input-field' id='expiration-date-input' type="date" name="expiration" value="">
+        <label for="expiration-date-input">
+          <h5 class='text-field-header'>Expiration</h5>
+          <input class='input-field' id='expiration-date-input' type="date" name="expiration" value="">
+        </label>
       </div>
 
 
@@ -51,34 +54,16 @@
 
 
 
-      <button id='submit-new-aid' type="button" name="button">Submit</button>
+      <button id='submit-new-aid' class='primary-button' type="button" name="button">Submit</button>
 
     </form>
     <div class="contribute-button-container">
       <button class='contribute-button' type="button" name="button">
-        <img id='addAidButton' src="img/icons/plus-red.png" alt="Contribute">
+        <img id='addAidButton' src="../img/icons/add.png" alt="Contribute">
       </button>
     </div>
 
   </section>
-  <section class='flex-container nav-container'>
-    <nav class=''>
-      <ul class='flex-container'>
-        <li>
-          <img class='icon' src="img/icons/house-icon.png" alt="Home">
-        </li>
-        <li>
-          <img class='icon' src="img/icons/food-icon.png" alt="Food Aid">
-        </li>
-        <li>
-          <img class='icon' src="img/icons/governance-icon.png" alt="Governance and Contribution">
-        </li>
-      </ul>
-    </nav>
-    <div class="under-curve">
-    </div>
-    <div class="right-curve">
-    </div>
-  </section>
+
 <script type="text/javascript" src='js/footer.js'></script>
 </footer>

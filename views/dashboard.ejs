@@ -3,7 +3,7 @@
   <%- include('./partials/head.ejs') %>
   <body>
     <link rel="stylesheet" href="../css/dashboard.css">
-    <section data-twilio-id='dashboard' class='main flex-container flex-column'>
+    <section data-twilio-id='dashboard' class='main'>
       <%- include('./dashboard/header.ejs') %>
 
       <section class='search hide'>
@@ -18,67 +18,46 @@
         <div class="aid-header">
           <h2>Available Aid</h2>
           <span class='see-all'>
-            <a class=href="#">See All</a>
+            <a class=''href="">See All</a>
           </span>
         </div>
-        <div class="aid-filters">
-          <form class="aid-filter-form" action="/filterSuggestions" method="get">
-            <ul class='aid-filter-list flex-container flex-wrap'>
-              <li>
-                <button class='aid-filter-button' type="button" name="button" value='relevant'>Relevant</button>
-              </li>
-              <li>
-                <button class='aid-filter-button' type="button" name="button" value='nearby'>Nearby</button>
-              </li>
-              <li>
-                <button class='aid-filter-button' type="button" name="button" value='deliverable'>Delivarable</button>
-              </li>
-              <li>
-                <button class='aid-filter-button' type="button" name="button" value='garden'>Garden</button>
-              </li>
-              <li>
-                <button class='aid-filter-button' type="button" name="button" value='prepacked'>Prepacked</button>
-              </li>
-            </ul>
-          </form>
-        </div>
+
 
         <div class="suggested-aid">
           <ul class="suggested-aid-list flex-container">
             <% for(let i = 0 ; i < foodAid.length ;i++) { %>
-            <li>
-              <div class="food-card card flex-container flex-column flex-spread">
-                <div class="category-icon <%= foodAid[i].foodType %>">
-                  <img class='category-image  icon' src="img/icons/<%= foodAid[i].foodType %>-icon.png" alt="<%= foodAid[i].foodType %>">
-                </div>
-                <div class="card-top">
+            <li class=''>
+              <div data-card-type='available' class="can-focus food-card card food-card-<%= foodAid[i].foodType %> flex-container flex-column flex-spread">
+                <div class="card-header">
                   <h3 class='food-title'><%= foodAid[i].title %></h3>
-                  <input type="hidden" name="aid-id" value="<%= foodAid[i]._id %>">
-                  <span class='food-expiration'>Exp: <span class='expiration-date'><%= foodAid[i].expiration %></span></span>
-                  <div class="food-source">
-                    <img class='icon' src="img/icons/<%= foodAid[i].source %>-icon.png" alt="<%= foodAid[i].source %>">
-                  </div>
+                  <span class='food-source'>From: <span class='source-name'><%= foodAid[i].authorName %></span></span>
                 </div>
-                <div class="card-bottom">
-
-                  <div class="share-options">
-                    <% if(foodAid[i].canWalk) { %>
-                      <button class='req-aid' type="button" name="req-walk">
-                        <img class='walk-icon icon' src="img/icons/carry-icon.png" alt="Walkable">
-                      </button>
-
-                    <% } %>
-
-                    <% if(foodAid[i].canDeliver) { %>
-                      <button class='req-aid' type="button" name="req-deliver">
-                        <img class='delivery-icon icon' src="img/icons/delivery-icon.png" alt="Delivery Needed">
-                      </button>
-
-                    <% } %>
-                  </div>
-                  <span class='source'>From: <span class='source-name'><%= foodAid[i].authorName %></span></span>
+                <div class="card-image">
+                  <img src="../img/card/<%= foodAid[i].foodType %>.png" alt="<%= foodAid[i].foodType %> Image">
                 </div>
+                <button class='more-card-details-button' type="button" name="button"></button>
+                <input type="hidden" name="aid-id" value="<%= foodAid[i]._id %>">
+                <input type="hidden" name="aid-title" value="<%= foodAid[i].title %>">
+                <input type="hidden" name="aid-expiration" value="<%= foodAid[i].expiration %>">
+                <input type="hidden" name="aid-source" value="<%= foodAid[i].source %>">
+                <input type="hidden" name="aid-authorName" value="<%= foodAid[i].authorName %>">
+                <input type="hidden" name="aid-requestorName" value="<%= foodAid[i].requestorName %>">
+                <input type="hidden" name="aid-foodType" value="<%= foodAid[i].foodType %>">
+                <input type="hidden" name="aid-status" value="<%= foodAid[i].status %>">
+                <input type="hidden" name="aid-twilioConversationsSID" value="<%= foodAid[i].twilioConversationsSID %>">
+                <input type="hidden" name="aid-description" value="<%= foodAid[i].description %>">
               </div>
+              <section class="food-card-detail-preview flex-container flex-xy-center flex-spread">
+                <span class='food-expiration'>Exp: <span class='food-expiration-date'><%= foodAid[i].expiration %></span></span>
+                <section class='badges flex-container flex-xy-center'>
+                  <div class="badge flex-container flex-xy-center food-type-badge">
+                    <img src="../img/icons/<%= foodAid[i].foodType %>-icon.png" alt="<%= foodAid[i].foodType %> Icon">
+                  </div>
+                  <div class="badge flex-container flex-xy-center food-source-badge">
+                    <img src="../img/icons/<%= foodAid[i].source %>-icon.png" alt="<%= foodAid[i].source %> Icon">
+                  </div>
+                </section>
+              </section>
             </li>
             <% } %>
 
@@ -98,7 +77,7 @@
         <ul class="next-actions flex-container flex-column">
           <% for(let i=0 ; i < actions.length ; i++) { %>
             <li>
-              <div data-aid-id='<%= actions[i]._id %>' data-conversation-sid='<%= actions[i].twilioConversationsSID %>' class="card action-card flex-container">
+              <div data-card-type='current' data-aid-id='<%= actions[i]._id %>' data-conversation-sid='<%= actions[i].twilioConversationsSID %>' class="card action-card can-focus flex-container">
 
                 <a href='/chat/<%= actions[i]._id %>' class="chat-action action-card-icon flex-container flex-xy-center <% if(actions[i].twilioConversationsSID === null) {%> hide <% } %>">
                   <div class='hide notifications notification-badge flex-container flex-xy-center'>
@@ -134,6 +113,38 @@
 
       <%- include('./dashboard/footer.ejs') %>
     </section>
+    <div id='focus-card-container' class="focus-card-container flex-container flex-xy-center hide">
+      <section id='focus-card' class='focus-card'>
+        <input id='focus-id' type="hidden" name="focus-id" value="">
+        <h2 id='focus-title' data-title='' class=''></h2>
+        <span class='focus-by block'><span id='focus-author-name' data-author-name='' class=''></span></span>
+        <section class='flex-container flex-spread focus-stats'>
+          <div id='focus-type-container' class="focus-stat focus-type-container">
+            <h5>Type</h5>
+            <span id='focus-type' data-type=''></span>
+          </div>
+          <div id='focus-source-container' class="focus-source-container focus-stat">
+            <h5>Source</h5>
+            <span id='focus-source' data-source=''></span>
+          </div>
+          <div id='focus-expiration-container' class="focus-expiration-container">
+            <h5>Expiration</h5>
+            <span id='focus-expiration' data-expiration=''></span>
+          </div>
+        </section>
+        <p id='focus-description'></p>
+        <section id='focus-footer' class='focus-footer flex-container flex-spread'>
+          <div id='focus-status-container' class="focus-status">
+            <h6>Status</h6>
+            <span id='focus-status' data-status=''></span>
+          </div>
+          <div class="button-container focus-action-container">
+            <button id='focus-action' data-action-type='' class='focus-action' data-twilioConversationsSID='' type="button" name="button"></button>
+          </div>
+        </section>
+        <button id='close-focus-button' class="close-focus-button"></button>
+      </section>
+    </div>
 
     <%- include('./dashboard/aside.ejs') %>
     <script src="https://media.twiliocdn.com/sdk/js/conversations/v1.1/twilio-conversations.min.js"></script>

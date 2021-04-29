@@ -27,7 +27,7 @@
 :root {
   --peach-color : rgb(232,177,168);
   --leaf-color : rgb(180,218,192);
-  --carot-color : rgb(255,168,117);
+  --water-color : rgb(171, 220, 255);
   --apple-color: rgb(237,161,171);
 }
 
@@ -58,16 +58,23 @@ h2 {
   font-size: 2rem;
   display: inline-block;
   margin-bottom: .25rem;
+  font-family: 'Futura','Helvetica Neue', 'Helvetica', Arial;
 }
 
 h3 {
-  font-size: min(5vw,2rem);
+  font-size: min(8vw,1.5rem);
+  font-family: 'Helvetica Neue', 'Helvetica', Arial;
+  font-weight: bold;
   /* text-align: center; */
 }
 
 .in-progress h3 {
   display: inline-block;
+  font-family: 'Futura','Helvetica Neue', 'Helvetica', Arial;
+  font-weight: normal;
 }
+
+
 
 h4 {
   font-size: 1.3rem;
@@ -77,6 +84,11 @@ h4 {
 
 .in-progress h4{
   margin-bottom: .25rem;
+}
+
+.see-all {
+  font-family: 'Helvetica Neue', 'Helvetica', Arial;
+  font-weight: light;
 }
 
 
@@ -356,7 +368,7 @@ Custom Layout Below
 
 
 .aid-filters{
-  margin-bottom: 1rem;
+  margin-bottom: .25rem;
 }
 
 .aid-header,
@@ -376,7 +388,7 @@ Custom Layout Below
 }
 
 .suggested-aid {
-  margin-top: 1.5rem;
+  margin-top: 0rem;
 }
 
 
@@ -386,7 +398,7 @@ Custom Layout Below
 ===Additional Styling====
 *************************/
 .main {
-  background-color: rgba(189,204,230,1);
+  background-color: #FFEFEF;
   /* padding: 1rem min(3rem, 2vw); */
   border-radius: 1rem;
   position: relative;
@@ -426,6 +438,12 @@ img {
   padding: .75rem;
   border-radius: 1rem;
   border: 3px solid rgba(100,100,100,.3);
+  outline: none;
+}
+
+input[type='text'].input-field:active,
+input[type='text'].input-field:focus {
+  border: 3px solid rgb(128,223,181);
 }
 
 .text-field {
@@ -714,6 +732,13 @@ li + li{
   box-shadow: inset 0 0 5px 1px;
 }
 
+input[type='radio']:checked + label {
+  box-shadow: 0 0 1rem .5rem rgba(255,255,255,.3);
+  background-color: rgb(128,223,181);
+}
+
+
+
 /***********************************
 ==========Custom Components=========
 ************************************/
@@ -734,7 +759,9 @@ a {
 .map-back-link::before,
 .map-back-link::after,
 .back-link::before,
-.back-link::after{
+.back-link::after,
+.close-focus-button::before,
+.close-focus-button::after{
   content: ' ';
   position: absolute;
   top:50%;
@@ -745,7 +772,9 @@ a {
 
 }
 
-
+.block {
+  display:block;
+}
 
 .back-link::before{
   transform-origin: top left;
@@ -768,13 +797,39 @@ a {
   transform: rotate(-45deg);
 }
 
+.close-focus-button{
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  border:none;
+  background: none;
+}
+
+.close-focus-button::before,
+.close-focus-button::after {
+  width: 1.5rem;
+}
+
+.close-focus-button::before {
+  /* transform-origin: top left; */
+  transform: rotate(45deg);
+}
+
+.close-focus-button::after {
+  /* transform-origin: top left; */
+  transform: rotate(-45deg);
+}
+
+
 .suggested-aid{
   overflow-x: scroll;
-  padding: 1rem 0;
+  padding: 0rem 0;
 }
 
 .suggested-aid-list > li + li{
-  margin-left: 1rem;
+  margin-left: .5rem;
 }
 
 .aid-filters button {
@@ -783,6 +838,23 @@ a {
   border-radius: 5rem;
   padding: .25rem .5rem;
   font-size: .6rem;
+}
+
+.badge {
+  border-radius: 50%;
+  height: 1.25rem;
+  width: 1.25rem;
+  padding: .2rem;
+  background-color: #FFEFEF;
+  border: 2px solid rgba(41,41,41,.7);
+  margin: 0 0 0 0;
+  position:relative;
+}
+
+.food-type-badge {
+  left: .5rem;
+  z-index: 1;
+  box-shadow: 0 0 0 1px #FFEFEF;
 }
 
 .aid-filters li + li {
@@ -902,12 +974,30 @@ a {
 
 .food-card {
   width: 10rem;
-  height: 12rem;
-  background: linear-gradient(-45deg,  #C6344D 2%  , #E28471 80% );
+  height: 13.6rem;
+  /* background: linear-gradient(-45deg,  #C6344D 2%  , #E28471 80% ); */
   border-radius: 2rem;
-  color: white;
-  padding: 1.75rem 1rem 1rem 1rem;
+  /* color: white; */
+  padding: 1.5rem 1rem 1rem 1rem;
   position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px .5rem 0 rgba(41,41,41,.5);
+  margin-left: .5rem;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 1s ease;
+}
+
+.food-card-vegetable {
+  background-color: var(--peach-color);
+}
+
+.food-card-fruit {
+  background-color: var(--leaf-color);
+}
+
+.food-card-grain {
+  background-color: var(--water-color);
 }
 
 .food-card .category-icon {
@@ -922,11 +1012,126 @@ a {
   top: -1rem;
   left:50%;
   transform: translateX(-50%);
+
+}
+
+.food-card .card-image {
+  position:absolute;
+  transform:rotate(-20deg);
+  z-index: 1;
+}
+
+.food-card-vegetable .card-image {
+  left: -.5rem;
+  right: -1.5rem;
+  bottom: -1.5rem;
+  transform: rotate(-30deg);
+}
+
+.food-card-fruit .card-image {
+  left: 1rem;
+  right: -1.5rem;
+  bottom: -1.5rem;
+}
+
+.food-card-grain .card-image {
+  left: 0.25rem;
+  right: -.25rem;
+  bottom: -2rem;
+}
+
+.food-card .card-header {
+  position: relative;
+  z-index: 3;
 }
 
 .food-expiration {
   font-size: .75rem;
 }
+
+.food-source {
+  font-size: .56rem;
+}
+
+.food-card-detail-preview {
+  margin-top: .25rem;
+  padding: 0 1rem;
+}
+
+.food-card.focus {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.more-card-details-button {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  background: none;
+  border: none;
+  outline: none;
+  transform: rotate(135deg);
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.more-card-details-button::before {
+
+}
+
+.more-card-details-button::before,
+.more-card-details-button::after {
+  content: ' ';
+  position: absolute;
+  top:50%;
+  right:.75rem;
+  height: 2px;
+  width: .75rem;
+  background-color: rgb(41,41,41);
+}
+
+.more-card-details-button::before{
+  transform-origin: top left;
+  transform: rotate(45deg);
+
+}
+
+.more-card-details-button::after{
+  transform-origin: bottom left;
+  transform: rotate(-45deg);
+}
+
+
+/**
+Focus Card Components
+**/
+
+.focus-card-container {
+  position:absolute;
+  width:100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  background-color: rgba(41,41,41,.3);
+  z-index: 50;
+}
+
+.focus-card{
+  position: absolute;
+  height: 30rem;
+  width: 20rem;
+  background-color: var(--apple-color);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.focus-stat {
+  
+}
+
+
+
 
 .veggie {
   background-color: #38B773;
