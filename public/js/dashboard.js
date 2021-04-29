@@ -144,3 +144,7 @@ async function chat(element){
     console.log(e);
   }
 }
+
+document.querySelector('#close-focus-button').addEventListener('click',_=>{
+  focusCardContainer.classList.add('hide')
+})

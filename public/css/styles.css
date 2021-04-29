@@ -1121,15 +1121,39 @@ Focus Card Components
   position: absolute;
   height: 30rem;
   width: 20rem;
-  background-color: var(--apple-color);
+  background-color: rgb(250,250,250);
   border-radius: 1rem;
-  padding: 2rem;
+  padding: 5rem 2rem 2rem 2rem;
+  font-size: .75rem;
+  color: rgba(41,41,41,.5);
+  border: .25rem solid rgba(41,41,41,.5);
+}
+
+.focus-title {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.focus-by {
+  margin-bottom: 2rem;
+}
+
+.focus-stats {
+  margin-bottom: 2rem;
 }
 
 .focus-stat {
-  
+  border-radius: 1rem;
+  border: 1.5px solid rgba(41,41,41,.2);
+  flex: 1 1 1;
+  padding: 1rem;
+  text-align: center;
 }
 
+.focus-stat + .focus-stat {
+  margin-left: .5rem;
+}
 
 
 
