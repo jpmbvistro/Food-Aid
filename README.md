@@ -12,7 +12,11 @@ Fruitfully's Most Stable Version is currently hosted here: https://jpmbvistro-fr
 
 ![Submission Screenshot](screenshot/screenshot2.png) ![Chat Screenshot](screenshot/screenshot3.png)
 
+## Integrations
 
+Twilio Conversations
+
+Leaflet Maps
 
 
 #### Development Notes
