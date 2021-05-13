@@ -12,6 +12,20 @@ Fruitfully's Most Stable Version is currently hosted here: https://jpmbvistro-fr
 
 ![Submission Screenshot](screenshot/screenshot2.png) ![Chat Screenshot](screenshot/screenshot3.png)
 
+## Primary Technologies
+
+HTML
+
+CSS
+
+JS
+
+NodeJs
+
+Express
+
+MongoDB
+
 ## Integrations
 
 Twilio Conversations
@@ -21,7 +35,9 @@ Leaflet Maps
 Open Cage
 
 
-#### Development Notes
+
+
+## Development Notes
 
 Securing sensitive data:
 Do not want submitter data to be sent to client. Should I use delete or destructuring //destructuring introduced by Jerry Lafume
